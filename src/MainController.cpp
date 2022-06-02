@@ -51,6 +51,15 @@
 /* ########################################################################## */
 /* ########################################################################## */
 
+static const QString    C_TESTDATA_FILE
+    = "../tests/data/samples/tic-standard-1phase-live_30s_raw.dat";
+//        "../tests/data/samples/tic-historical-3phase-1min.raw.dat"
+//        "../tests/data/samples/tic-standard-singleFrame.dat"
+//        "../tests/data/samples/tic-standard-1phase.raw.dat";
+
+/* ########################################################################## */
+/* ########################################################################## */
+
 MainController::MainController(void)
     :   QObject()
     ,   p_frameProcessor(std::make_unique<TIC::FrameProcessor>())
@@ -129,6 +138,8 @@ QByteArray
     bool    lFlagContinueProcess    = true;
     while( lFlagContinueProcess )
     {
+        TRACE_DBG("New iteration of buffer processing.")
+
         if( this->m_inputBuffer.isEmpty() == true )
         {
             TRACE_DBG("Buffer is empty.")
@@ -163,6 +174,8 @@ QByteArray
             )
 
             this->m_inputBuffer.remove( 0, lIdxFirstFrameStart);
+
+            lIdxFirstFrameStart = this->m_inputBuffer.indexOf(c_startOfFrame);
         }
         else
         {
@@ -229,8 +242,8 @@ QByteArray
         else
         {
             /* Extract the frame */
-            retval  = this->m_inputBuffer.left(lIdxFrameEnd);
-            this->m_inputBuffer.remove( 0, lIdxFrameEnd );
+            retval  = this->m_inputBuffer.left(lIdxFrameEnd + 1);
+            this->m_inputBuffer.remove( 0, lIdxFrameEnd + 1 );
             lFlagContinueProcess    = false;
             break;
         }
@@ -284,11 +297,7 @@ void
     TRACE_DBG("Button 'OpenClose' clicked.")
 
 #ifdef  TEST_DATA_FROM_FILE
-    QFile   lInputFile(
-//        "../tests/data/samples/tic-historical-3phase-1min.raw.dat"
-//        "../tests/data/samples/tic-standard-singleFrame.dat"
-        "../tests/data/samples/tic-standard-1phase.raw.dat"
-    );
+    QFile   lInputFile( C_TESTDATA_FILE );
 
     if( ! lInputFile.open(QFile::ReadOnly) )
     {
@@ -307,7 +316,7 @@ void
         TRACE_DBG("Reading data from file...")
 
         /* Limit the length of the data read to force using the buffer */
-        lReadData   = lInputFile.read(10);
+        lReadData   = lInputFile.read(1000);
         TRACE_DBGLOW(
             "Read data:'%s'.",
             lReadData.toStdString().c_str()
