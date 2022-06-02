@@ -13,6 +13,8 @@ class   QVBoxLayout;
 /* Project includes */
 #include "core/comm/protocol/tic/utils.h"
 
+class   GBInfosCompteur;
+
 
 
 /* ########################################################################## */
@@ -115,8 +117,9 @@ private:
     };
 
 
-    QVBoxLayout*    p_layoutMain;
-    QTableWidget*   p_table;
+    GBInfosCompteur*    p_infosCompteurGB;
+    QVBoxLayout*        p_layoutMain;
+    QTableWidget*       p_table;
 
 
 

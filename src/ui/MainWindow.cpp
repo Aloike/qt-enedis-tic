@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *pParent)
     this->_createUi();
     this->_createLayout();
 
-    this->showMaximized();
+//    this->showMaximized();
 }
 
 /* ########################################################################## */

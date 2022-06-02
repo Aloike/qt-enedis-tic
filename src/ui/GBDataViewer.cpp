@@ -10,6 +10,7 @@
 /* Project includes */
 #include "core/comm/protocol/tic/datasets.h"
 #include "core/comm/protocol/tic/utils.h"
+#include "ui/dataDisplay/GBInfosCompteur.h"
 
 
 /* ########################################################################## */
@@ -63,6 +64,7 @@ GBDataViewer::GBDataViewer(QWidget *parent)
             tr("Received data"),
             parent
         )
+    ,   p_infosCompteurGB(new GBInfosCompteur(this))
     ,   p_table(new QTableWidget(this))
 {
     this->_createUi();
@@ -78,6 +80,7 @@ void
 {
     this->p_layoutMain  = new   QVBoxLayout(this);
 
+    this->p_layoutMain->addWidget( this->p_infosCompteurGB );
     this->p_layoutMain->addWidget( this->p_table );
 }
 
@@ -96,10 +99,10 @@ void
 //            new QTableWidgetItem( "ADSC" )
 //        );
 
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowADSC, ADSC )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowADSC, ADSC )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowCCASN_1, CCASN_1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowCCASN, CCASN )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowDATE, DATE )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowDATE, DATE )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD01, EASD01 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD02, EASD02 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD03, EASD03 )
@@ -119,8 +122,8 @@ void
     M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS2, IRMS2 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS3, IRMS3 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowLTARF, LTARF )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG1, MSG1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG2, MSG2 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG1, MSG1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG2, MSG2 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowNGTF, NGTF )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF_1, NJOURF_1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF, NJOURF )
@@ -129,8 +132,8 @@ void
     M_TABLEITEMS_FROM_DATASET( p_table, ERowPJOURF_1, PJOURF_1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowPPOINTE, PPOINTE )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowPREF, PREF )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowPRM, PRM )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowRELAIS, RELAIS )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPRM, PRM )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowRELAIS, RELAIS )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS1, SINSTS1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS2, SINSTS2 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS3, SINSTS3 )
@@ -143,14 +146,14 @@ void
     M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3_1, SMAXSN3_1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3, SMAXSN3 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN, SMAXSN )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSTGE, STGE )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSTGE, STGE )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY1, UMOY1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY2, UMOY2 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY3, UMOY3 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS1, URMS1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS2, URMS2 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS3, URMS3 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowVTIC, VTIC )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowVTIC, VTIC )
 }
 
 /* ########################################################################## */
@@ -165,6 +168,11 @@ void
     {
         int lRow    = -1;
 
+        TRACE_DBG(
+            "Processing dataset with label '%s'.",
+            lDatasetPtr->label().c_str()
+        )
+
 
 //        if(lDatasetPtr->label() == TIC::Datasets::ADSC::LABEL )
 //        {
@@ -174,7 +182,11 @@ void
 //        }
         if(lDatasetPtr->label() == TIC::Datasets::ADSC::LABEL )
         {
-            lRow    = ERowADSC;
+//            lRow    = ERowADSC;
+            this->p_infosCompteurGB->setADSC(
+                QString::fromStdString(lDatasetPtr->data())
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::CCASN_1::LABEL )
         {
@@ -186,7 +198,10 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::DATE::LABEL )
         {
-            lRow    = ERowDATE;
+            this->p_infosCompteurGB->setDATE(
+                QString::fromStdString(lDatasetPtr->timestamp())
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASD01::LABEL )
         {
@@ -266,11 +281,17 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::MSG1::LABEL )
         {
-            lRow    = ERowMSG1;
+            this->p_infosCompteurGB->setMSG1(
+                QString::fromStdString(lDatasetPtr->data())
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::MSG2::LABEL )
         {
-            lRow    = ERowMSG2;
+            this->p_infosCompteurGB->setMSG2(
+                QString::fromStdString(lDatasetPtr->data())
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::NGTF::LABEL )
         {
@@ -306,11 +327,17 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PRM::LABEL )
         {
-            lRow    = ERowPRM;
+            this->p_infosCompteurGB->setPRM(
+                QString::fromStdString(lDatasetPtr->data())
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::RELAIS::LABEL )
         {
-            lRow    = ERowRELAIS;
+            this->p_infosCompteurGB->setRELAIS(
+                QString::fromStdString(lDatasetPtr->data())
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SINSTS1::LABEL )
         {
@@ -362,7 +389,10 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::STGE::LABEL )
         {
-            lRow    = ERowSTGE;
+            this->p_infosCompteurGB->setSTGE(
+                QString::fromStdString(lDatasetPtr->data())
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::UMOY1::LABEL )
         {
@@ -390,7 +420,10 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::VTIC::LABEL )
         {
-            lRow    = ERowVTIC;
+            this->p_infosCompteurGB->setVTIC(
+                QString::fromStdString(lDatasetPtr->data())
+            );
+            continue;
         }
         else
         {
