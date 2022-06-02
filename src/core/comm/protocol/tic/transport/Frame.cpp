@@ -61,10 +61,10 @@ void
         throw std::runtime_error("pData doesn't start with STX!");
     }
 
-//    if( pData[pData.length() - 1] != TIC::CHAR_ETX )
-//    {
-//        throw std::runtime_error("pData doesn't end with ETX!");
-//    }
+    if( pData[pData.length() - 1] != TIC::CHAR_ETX )
+    {
+        throw std::runtime_error("pData doesn't end with ETX!");
+    }
 
     /*
      *  Processing
@@ -82,8 +82,7 @@ void
 
         /* Find the end of the dataset */
         lPosDatasetEnd  = pData.find(
-//            TIC::CHAR_CR,
-            TIC::CHAR_LF,
+            TIC::CHAR_CR,
             lPosDatasetStart+1
         );
 //        std::cout << "lPosDatasetEnd:" << lPosDatasetEnd << std::endl << std::flush;
