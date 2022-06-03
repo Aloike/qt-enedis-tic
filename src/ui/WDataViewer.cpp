@@ -11,6 +11,7 @@
 /* Project includes */
 #include "core/comm/protocol/tic/datasets.h"
 #include "core/comm/protocol/tic/utils.h"
+#include "ui/dataDisplay/GBEnergieActive.h"
 #include "ui/dataDisplay/GBInfosCompteur.h"
 #include "ui/dataDisplay/GBPuissanceApparente.h"
 #include "ui/dataDisplay/GBCourantTension.h"
@@ -64,6 +65,7 @@
 
 WDataViewer::WDataViewer(QWidget *parent)
     :   QWidget( parent )
+    ,   p_energieActiveGB(new GBEnergieActive(this))
     ,   p_infosCompteurGB(new GBInfosCompteur(this))
     ,   p_puissanceApparenteGB(new GBPuissanceApparente(this))
     ,   p_table(new QTableWidget(this))
@@ -87,6 +89,7 @@ void
     this->p_layoutMain->addLayout(this->p_layoutReadings);
     this->p_layoutReadings->addWidget( this->p_puissanceApparenteGB );
     this->p_layoutReadings->addWidget( this->p_tensionCourantGB );
+    this->p_layoutReadings->addWidget( this->p_energieActiveGB );
 
     this->p_layoutMain->addWidget( this->p_table );
 }
@@ -110,21 +113,21 @@ void
     M_TABLEITEMS_FROM_DATASET( p_table, ERowCCASN_1, CCASN_1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowCCASN, CCASN )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowDATE, DATE )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD01, EASD01 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD02, EASD02 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD03, EASD03 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD04, EASD04 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF01, EASF01 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF02, EASF02 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF03, EASF03 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF04, EASF04 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF05, EASF05 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF06, EASF06 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF07, EASF07 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF08, EASF08 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF09, EASF09 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF10, EASF10 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowEAST, EAST )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD01, EASD01 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD02, EASD02 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD03, EASD03 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD04, EASD04 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF01, EASF01 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF02, EASF02 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF03, EASF03 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF04, EASF04 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF05, EASF05 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF06, EASF06 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF07, EASF07 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF08, EASF08 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF09, EASF09 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF10, EASF10 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEAST, EAST )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS1, IRMS1 )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS2, IRMS2 )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS3, IRMS3 )
@@ -212,63 +215,108 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASD01::LABEL )
         {
-            lRow    = ERowEASD01;
+            this->p_energieActiveGB->setEASD01(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASD02::LABEL )
         {
-            lRow    = ERowEASD02;
+            this->p_energieActiveGB->setEASD02(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASD03::LABEL )
         {
-            lRow    = ERowEASD03;
+            this->p_energieActiveGB->setEASD03(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASD04::LABEL )
         {
-            lRow    = ERowEASD04;
+            this->p_energieActiveGB->setEASD04(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF01::LABEL )
         {
-            lRow    = ERowEASF01;
+            this->p_energieActiveGB->setEASF01(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF02::LABEL )
         {
-            lRow    = ERowEASF02;
+            this->p_energieActiveGB->setEASF02(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF03::LABEL )
         {
-            lRow    = ERowEASF03;
+            this->p_energieActiveGB->setEASF03(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF04::LABEL )
         {
-            lRow    = ERowEASF04;
+            this->p_energieActiveGB->setEASF04(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF05::LABEL )
         {
-            lRow    = ERowEASF05;
+            this->p_energieActiveGB->setEASF05(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF06::LABEL )
         {
-            lRow    = ERowEASF06;
+            this->p_energieActiveGB->setEASF06(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF07::LABEL )
         {
-            lRow    = ERowEASF07;
+            this->p_energieActiveGB->setEASF07(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF08::LABEL )
         {
-            lRow    = ERowEASF08;
+            this->p_energieActiveGB->setEASF08(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF09::LABEL )
         {
-            lRow    = ERowEASF09;
+            this->p_energieActiveGB->setEASF09(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EASF10::LABEL )
         {
-            lRow    = ERowEASF10;
+            this->p_energieActiveGB->setEASF10(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::EAST::LABEL )
         {
-            lRow    = ERowEAST;
+            this->p_energieActiveGB->setEAST(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::IRMS1::LABEL )
         {

@@ -1,8 +1,8 @@
-#include "GBCourantTension.h"
-#include "ui_GBCourantTension.h"
+#include "ui_utils.h"
+
+#include <QLabel>
 
 #include "core/comm/protocol/tic/datasets/AbstractDataset.h"
-#include "ui/ui_utils.h"
 
 
 /* ########################################################################## */
@@ -39,73 +39,22 @@
 /* ########################################################################## */
 /* ########################################################################## */
 
-GBCourantTension::GBCourantTension(QWidget *parent)
-    :   QGroupBox(parent)
-    ,   ui(new Ui::GBCourantTension)
-{
-    ui->setupUi(this);
+namespace Ui {
 
-    this->clear();
-}
 
-GBCourantTension::~GBCourantTension()
-{
-    delete ui;
-}
+const QString   c_strNoDataTimestamp("@ --/--/---- --:--:-- (-)");
 
-void    GBCourantTension::clear()
-{
-    const QString   c_strNoData3A("--- A");
-    const QString   c_strNoData3V("--- V");
 
-    this->ui->IRMS1Value->setText(c_strNoData3A);
-    this->ui->IRMS2Value->setText(c_strNoData3A);
-    this->ui->IRMS3Value->setText(c_strNoData3A);
-
-    this->ui->UMOY1Timestamp->setText(Ui::c_strNoDataTimestamp);
-    this->ui->UMOY1Value->setText(c_strNoData3V);
-    this->ui->UMOY2Timestamp->setText(Ui::c_strNoDataTimestamp);
-    this->ui->UMOY2Value->setText(c_strNoData3V);
-    this->ui->UMOY3Timestamp->setText(Ui::c_strNoDataTimestamp);
-    this->ui->UMOY3Value->setText(c_strNoData3V);
-
-    this->ui->URMS1Value->setText(c_strNoData3V);
-    this->ui->URMS2Value->setText(c_strNoData3V);
-    this->ui->URMS3Value->setText(c_strNoData3V);
-}
-
-void    GBCourantTension::setIRMS1(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->IRMS1Value
-    );
-}
-
-void    GBCourantTension::setIRMS2(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->IRMS2Value
-    );
-}
-
-void    GBCourantTension::setIRMS3(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->IRMS3Value
-    );
-}
-
-void    GBCourantTension::setLabel3(
+void    setLabel_fromDataset(
                 const TIC::TDatasetPtr  &pDataset,
                 QLabel                  *pLabelValuePtr,
+                const uint&             pFieldWidth,
                 QLabel                  *pLabelTimestampPtr )
 {
     pLabelValuePtr->setText(
         QString::asprintf(
-            "%3d%s%s",
+            "%*d%s%s",
+            pFieldWidth,
             QString::fromStdString(pDataset->data()).toInt(),
             pDataset->unit().empty()? "" : " ",
             pDataset->unit().c_str()
@@ -124,6 +73,8 @@ void    GBCourantTension::setLabel3(
             pDataset->timestamp().length(),
             pDataset->timestamp().c_str()
         );
+
+        pLabelTimestampPtr->setText(c_strNoDataTimestamp);
     }
     else
     {
@@ -153,53 +104,4 @@ void    GBCourantTension::setLabel3(
     }
 }
 
-void    GBCourantTension::setUMOY1(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->UMOY1Value,
-        this->ui->UMOY1Timestamp
-    );
-}
-
-void    GBCourantTension::setUMOY2(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->UMOY2Value,
-        this->ui->UMOY2Timestamp
-    );
-}
-
-void    GBCourantTension::setUMOY3(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->UMOY3Value,
-        this->ui->UMOY3Timestamp
-    );
-}
-
-void    GBCourantTension::setURMS1(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->URMS1Value
-    );
-}
-
-void    GBCourantTension::setURMS2(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->URMS2Value
-    );
-}
-
-void    GBCourantTension::setURMS3(const TIC::TDatasetPtr &pDatasetPtr)
-{
-    this->setLabel3(
-        pDatasetPtr,
-        this->ui->URMS3Value
-    );
-}
+}   /*< namespace Ui */

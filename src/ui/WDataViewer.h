@@ -14,6 +14,7 @@ class   QVBoxLayout;
 /* Project includes */
 #include "core/comm/protocol/tic/utils.h"
 
+class   GBEnergieActive;
 class   GBInfosCompteur;
 class   GBPuissanceApparente;
 class   GBCourantTension;
@@ -120,6 +121,7 @@ private:
     };
 
 
+    GBEnergieActive*        p_energieActiveGB;
     GBInfosCompteur*        p_infosCompteurGB;
     QHBoxLayout*            p_layoutMain;
     QVBoxLayout*            p_layoutReadings;
