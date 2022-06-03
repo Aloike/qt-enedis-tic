@@ -13,8 +13,8 @@
 
 /* Project includes */
 #include "core/comm/protocol/tic/FrameProcessor.h"
-#include "ui/GBInput.h"
 #include "ui/MainWindow.h"
+#include "ui/TBSerialConfig.h"
 
 
 /* ########################################################################## */
@@ -87,14 +87,14 @@ void
     MainController::_createConnections(void)
 {
     QObject::connect(
-        this->p_mainWindow->inputGB(),
+        this->p_mainWindow->serialConfigTB(),
         SIGNAL(portsListAboutToShow()),
         this,
         SLOT(on_ui_portsList_aboutToShow())
     );
 
     QObject::connect(
-        this->p_mainWindow->inputGB(),
+        this->p_mainWindow->serialConfigTB(),
         SIGNAL(portOpenCloseTriggered(bool)),
         this,
         SLOT(on_ui_portOpenCloseTriggered(bool))
@@ -263,7 +263,7 @@ MainController::initialize(void)
     /* Show the UI */
     this->p_mainWindow->show();
 
-    this->p_mainWindow->inputGB()->setPortOpened(false);
+    this->p_mainWindow->serialConfigTB()->setPortOpened(false);
 //    this->updateSerialPortsList();
 }
 
@@ -345,7 +345,7 @@ void
     {
         /* Set port configuration */
         this->p_serialPort->setPortName(
-            this->p_mainWindow->inputGB()->selectedPortName()
+            this->p_mainWindow->serialConfigTB()->selectedPortName()
         );
 
         this->p_serialPort->setDataBits(QSerialPort::Data7);
@@ -354,7 +354,7 @@ void
         this->p_serialPort->setStopBits(QSerialPort::OneStop);
 
         QSerialPort::BaudRate lBaudRate = QSerialPort::Baud1200;
-        switch( this->p_mainWindow->inputGB()->selectedTICMode() )
+        switch( this->p_mainWindow->serialConfigTB()->selectedTICMode() )
         {
             case    TIC::E_TIC_MODE_HISTORICAL:
                 lBaudRate   = QSerialPort::Baud1200;
@@ -396,7 +396,7 @@ void
     }
 
     this->p_mainWindow->centralWidget()->setEnabled(true);
-    this->p_mainWindow->inputGB()->setPortOpened(
+    this->p_mainWindow->serialConfigTB()->setPortOpened(
         this->p_serialPort->isOpen()
     );
 #endif
@@ -471,7 +471,7 @@ MainController::updateSerialPortsList(void)
     }
 
 
-    this->p_mainWindow->inputGB()->setPortsList(lPortsList);
+    this->p_mainWindow->serialConfigTB()->setPortsList(lPortsList);
 }
 
 /* ########################################################################## */

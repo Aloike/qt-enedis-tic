@@ -5,7 +5,7 @@ SEARCHPATH=src/
 
 
 # Clear output file
-echo -n "" >> ${FILE_OUTPUT}
+echo -n "" > ${FILE_OUTPUT}
 
 for file in `find ${SEARCHPATH} -iname '*.ui'|sort`
 do

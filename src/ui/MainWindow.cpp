@@ -4,8 +4,8 @@
 #include <QMenuBar>
 #include <QVBoxLayout>
 
-#include "GBInput.h"
 #include "GBDataViewer.h"
+#include "TBSerialConfig.h"
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -13,8 +13,8 @@
 MainWindow::MainWindow(QWidget *pParent)
     :   QMainWindow(pParent)
     ,   p_dataViewerGB(new GBDataViewer(this))
-    ,   p_inputGB(new GBInput(this))
     ,   p_layoutMain( nullptr )
+    ,   p_serialConfigTB(new TBSerialConfig(this))
 {
     this->setWindowTitle(QCoreApplication::applicationName());
 
@@ -40,7 +40,6 @@ void
     this->setCentralWidget( new QWidget(this) );
     this->p_layoutMain  = new QVBoxLayout(this->centralWidget());
 
-    this->p_layoutMain->addWidget( this->p_inputGB );
     this->p_layoutMain->addWidget( this->p_dataViewerGB );
 }
 
@@ -52,15 +51,17 @@ void
 {
 //    this->setMenuBar(new QMenuBar(this));
     this->menuBar()->addMenu("testMenu");
+
+    this->addToolBar(this->p_serialConfigTB);
 }
 
 /* ########################################################################## */
 /* ########################################################################## */
 
-GBInput*
-    MainWindow::inputGB(void) const
+TBSerialConfig*
+    MainWindow::serialConfigTB(void) const
 {
-    return this->p_inputGB;
+    return this->p_serialConfigTB;
 }
 
 /* ########################################################################## */

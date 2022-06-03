@@ -95,6 +95,7 @@ HEADERS	+= src/ui/dataDisplay/GBPuissanceApparente.h
 HEADERS	+= src/ui/GBDataViewer.h
 HEADERS	+= src/ui/GBInput.h
 HEADERS	+= src/ui/MainWindow.h
+HEADERS	+= src/ui/TBSerialConfig.h
 HEADERS	+= src/Version.h
 
 SOURCES	+= src/core/comm/protocol/tic/DatasetFactory.cpp
@@ -189,3 +190,4 @@ SOURCES	+= src/ui/dataDisplay/GBPuissanceApparente.cpp
 SOURCES	+= src/ui/GBDataViewer.cpp
 SOURCES	+= src/ui/GBInput.cpp
 SOURCES	+= src/ui/MainWindow.cpp
+SOURCES	+= src/ui/TBSerialConfig.cpp

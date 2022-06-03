@@ -6,8 +6,8 @@
 class   QVBoxLayout;
 
 #include "core/comm/protocol/tic/utils.h"
-class   GBInput;
 class   GBDataViewer;
+class   TBSerialConfig;
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -23,7 +23,7 @@ public:
     ~MainWindow();
 
 
-    GBInput*    inputGB(void) const;
+    TBSerialConfig* serialConfigTB(void) const;
 
     void    updateData(const TIC::TDatasetsPtrList& pDatasetsList);
 
@@ -39,8 +39,8 @@ private:
 private:
 
     GBDataViewer*   p_dataViewerGB;
-    GBInput*        p_inputGB;
     QVBoxLayout*    p_layoutMain;
+    TBSerialConfig* p_serialConfigTB;
 
 };
 
