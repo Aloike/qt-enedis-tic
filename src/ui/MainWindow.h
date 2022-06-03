@@ -5,7 +5,7 @@
 
 class   QVBoxLayout;
 
-#include "core/comm/protocol/tic/TDatasetsList.h"
+#include "core/comm/protocol/tic/utils.h"
 class   GBInput;
 class   GBDataViewer;
 

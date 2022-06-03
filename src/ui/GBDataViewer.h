@@ -7,6 +7,7 @@
 /* System includes */
 
 /* Libraries includes */
+class   QHBoxLayout;
 class   QTableWidget;
 class   QVBoxLayout;
 
@@ -15,6 +16,7 @@ class   QVBoxLayout;
 
 class   GBInfosCompteur;
 class   GBPuissanceApparente;
+class   GBCourantTension;
 
 
 
@@ -119,9 +121,11 @@ private:
 
 
     GBInfosCompteur*        p_infosCompteurGB;
+    QHBoxLayout*            p_layoutMain;
+    QVBoxLayout*            p_layoutReadings;
     GBPuissanceApparente*   p_puissanceApparenteGB;
-    QVBoxLayout*            p_layoutMain;
     QTableWidget*           p_table;
+    GBCourantTension*       p_tensionCourantGB;
 
 
 

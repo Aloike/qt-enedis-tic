@@ -4,6 +4,7 @@
 /* System includes */
 
 /* Libraries includes */
+#include <QHBoxLayout>
 #include <QTableWidget>
 #include <QVBoxLayout>
 
@@ -12,6 +13,7 @@
 #include "core/comm/protocol/tic/utils.h"
 #include "ui/dataDisplay/GBInfosCompteur.h"
 #include "ui/dataDisplay/GBPuissanceApparente.h"
+#include "ui/dataDisplay/GBCourantTension.h"
 
 
 /* ########################################################################## */
@@ -68,6 +70,7 @@ GBDataViewer::GBDataViewer(QWidget *parent)
     ,   p_infosCompteurGB(new GBInfosCompteur(this))
     ,   p_puissanceApparenteGB(new GBPuissanceApparente(this))
     ,   p_table(new QTableWidget(this))
+    ,   p_tensionCourantGB(new GBCourantTension(this))
 {
     this->_createUi();
 
@@ -80,11 +83,14 @@ GBDataViewer::GBDataViewer(QWidget *parent)
 void
     GBDataViewer::_createLayout(void)
 {
-    this->p_layoutMain  = new   QVBoxLayout(this);
-
+    this->p_layoutMain  = new   QHBoxLayout(this);
     this->p_layoutMain->addWidget( this->p_infosCompteurGB );
-    this->p_layoutMain->addWidget( this->p_puissanceApparenteGB );
     this->p_layoutMain->addWidget( this->p_table );
+
+    this->p_layoutReadings  = new QVBoxLayout();
+    this->p_layoutMain->addLayout(this->p_layoutReadings);
+    this->p_layoutReadings->addWidget( this->p_puissanceApparenteGB );
+    this->p_layoutReadings->addWidget( this->p_tensionCourantGB );
 }
 
 /* ########################################################################## */
@@ -121,9 +127,9 @@ void
     M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF09, EASF09 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF10, EASF10 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowEAST, EAST )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS1, IRMS1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS2, IRMS2 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS3, IRMS3 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS1, IRMS1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS2, IRMS2 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS3, IRMS3 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowLTARF, LTARF )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG1, MSG1 )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG2, MSG2 )
@@ -150,12 +156,12 @@ void
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3, SMAXSN3 )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN, SMAXSN )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowSTGE, STGE )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY1, UMOY1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY2, UMOY2 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY3, UMOY3 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS1, URMS1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS2, URMS2 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS3, URMS3 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY1, UMOY1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY2, UMOY2 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY3, UMOY3 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS1, URMS1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS2, URMS2 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS3, URMS3 )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowVTIC, VTIC )
 }
 
@@ -268,15 +274,24 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::IRMS1::LABEL )
         {
-            lRow    = ERowIRMS1;
+            this->p_tensionCourantGB->setIRMS1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::IRMS2::LABEL )
         {
-            lRow    = ERowIRMS2;
+            this->p_tensionCourantGB->setIRMS2(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::IRMS3::LABEL )
         {
-            lRow    = ERowIRMS3;
+            this->p_tensionCourantGB->setIRMS3(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::LTARF::LABEL )
         {
@@ -441,27 +456,45 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::UMOY1::LABEL )
         {
-            lRow    = ERowUMOY1;
+            this->p_tensionCourantGB->setUMOY1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::UMOY2::LABEL )
         {
-            lRow    = ERowUMOY2;
+            this->p_tensionCourantGB->setUMOY2(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::UMOY3::LABEL )
         {
-            lRow    = ERowUMOY3;
+            this->p_tensionCourantGB->setUMOY3(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::URMS1::LABEL )
         {
-            lRow    = ERowURMS1;
+            this->p_tensionCourantGB->setURMS1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::URMS2::LABEL )
         {
-            lRow    = ERowURMS2;
+            this->p_tensionCourantGB->setURMS2(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::URMS3::LABEL )
         {
-            lRow    = ERowURMS3;
+            this->p_tensionCourantGB->setURMS3(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::VTIC::LABEL )
         {
