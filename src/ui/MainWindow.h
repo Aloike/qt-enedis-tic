@@ -6,8 +6,8 @@
 class   QVBoxLayout;
 
 #include "core/comm/protocol/tic/utils.h"
-class   GBDataViewer;
 class   TBSerialConfig;
+class   WDataViewer;
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -38,9 +38,8 @@ private:
 
 private:
 
-    GBDataViewer*   p_dataViewerGB;
-    QVBoxLayout*    p_layoutMain;
     TBSerialConfig* p_serialConfigTB;
+    WDataViewer*    p_dataViewerW;
 
 };
 

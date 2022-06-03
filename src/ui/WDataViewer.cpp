@@ -1,5 +1,5 @@
 /* Corresponding header inclusion */
-#include "GBDataViewer.h"
+#include "WDataViewer.h"
 
 /* System includes */
 
@@ -62,11 +62,8 @@
 /* ########################################################################## */
 /* ########################################################################## */
 
-GBDataViewer::GBDataViewer(QWidget *parent)
-    :   QGroupBox(
-            tr("Received data"),
-            parent
-        )
+WDataViewer::WDataViewer(QWidget *parent)
+    :   QWidget( parent )
     ,   p_infosCompteurGB(new GBInfosCompteur(this))
     ,   p_puissanceApparenteGB(new GBPuissanceApparente(this))
     ,   p_table(new QTableWidget(this))
@@ -81,23 +78,24 @@ GBDataViewer::GBDataViewer(QWidget *parent)
 /* ########################################################################## */
 
 void
-    GBDataViewer::_createLayout(void)
+    WDataViewer::_createLayout(void)
 {
     this->p_layoutMain  = new   QHBoxLayout(this);
     this->p_layoutMain->addWidget( this->p_infosCompteurGB );
-    this->p_layoutMain->addWidget( this->p_table );
 
     this->p_layoutReadings  = new QVBoxLayout();
     this->p_layoutMain->addLayout(this->p_layoutReadings);
     this->p_layoutReadings->addWidget( this->p_puissanceApparenteGB );
     this->p_layoutReadings->addWidget( this->p_tensionCourantGB );
+
+    this->p_layoutMain->addWidget( this->p_table );
 }
 
 /* ########################################################################## */
 /* ########################################################################## */
 
 void
-    GBDataViewer::_createUi(void)
+    WDataViewer::_createUi(void)
 {
     this->p_table->setColumnCount(EColumnsCount);
     this->p_table->setRowCount(ERowsCount);
@@ -169,7 +167,7 @@ void
 /* ########################################################################## */
 
 void
-    GBDataViewer::updateData(
+    WDataViewer::updateData(
         const TIC::TDatasetsPtrList &pDatasetsList
     )
 {

@@ -1,8 +1,8 @@
-#ifndef GBDATAVIEWER_H
-#define GBDATAVIEWER_H
+#ifndef WDATAVIEWER_H
+#define WDATAVIEWER_H
 
 /* Inherited classes */
-#include <QGroupBox>
+#include <QWidget>
 
 /* System includes */
 
@@ -23,14 +23,14 @@ class   GBCourantTension;
 /* ########################################################################## */
 /* ########################################################################## */
 
-class   GBDataViewer
-        :   public  QGroupBox
+class   WDataViewer
+        :   public  QWidget
 {
     Q_OBJECT
 
 public:
 
-    explicit GBDataViewer(QWidget *parent = nullptr);
+    explicit WDataViewer(QWidget *parent = nullptr);
 
 
     void    updateData(const TIC::TDatasetsPtrList &pDatasetsList);
@@ -137,4 +137,4 @@ public slots:
 /* ########################################################################## */
 /* ########################################################################## */
 
-#endif  /*< GBDATAVIEWER_H */
+#endif  /*< WDATAVIEWER_H */
