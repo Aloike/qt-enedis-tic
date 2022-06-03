@@ -12,11 +12,14 @@ namespace Ui {
 
 extern const QString    c_strNoDataTimestamp;
 
-void    setLabel_fromDataset(
+void    setLabel_fromDatasetInt(
                 const TIC::TDatasetPtr  &pDataset,
                 QLabel                  *pLabelValuePtr,
                 const uint&             pFieldWidth,
                 QLabel                  *pLabelTimestampPtr=nullptr );
+
+QString TICProfilJourToText(
+                const QString&  pProfilStr );
 
 
 }   /*< namespace Ui */

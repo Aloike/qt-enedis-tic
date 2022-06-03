@@ -11,10 +11,11 @@
 /* Project includes */
 #include "core/comm/protocol/tic/datasets.h"
 #include "core/comm/protocol/tic/utils.h"
+#include "ui/dataDisplay/GBCourantTension.h"
 #include "ui/dataDisplay/GBEnergieActive.h"
 #include "ui/dataDisplay/GBInfosCompteur.h"
 #include "ui/dataDisplay/GBPuissanceApparente.h"
-#include "ui/dataDisplay/GBCourantTension.h"
+#include "ui/dataDisplay/GBTarification.h"
 
 
 /* ########################################################################## */
@@ -69,6 +70,7 @@ WDataViewer::WDataViewer(QWidget *parent)
     ,   p_infosCompteurGB(new GBInfosCompteur(this))
     ,   p_puissanceApparenteGB(new GBPuissanceApparente(this))
     ,   p_table(new QTableWidget(this))
+    ,   p_tarificationGB(new GBTarification(this))
     ,   p_tensionCourantGB(new GBCourantTension(this))
 {
     this->_createUi();
@@ -87,9 +89,10 @@ void
 
     this->p_layoutReadings  = new QVBoxLayout();
     this->p_layoutMain->addLayout(this->p_layoutReadings);
+    this->p_layoutReadings->addWidget( this->p_tarificationGB );
+    this->p_layoutReadings->addWidget( this->p_energieActiveGB );
     this->p_layoutReadings->addWidget( this->p_puissanceApparenteGB );
     this->p_layoutReadings->addWidget( this->p_tensionCourantGB );
-    this->p_layoutReadings->addWidget( this->p_energieActiveGB );
 
     this->p_layoutMain->addWidget( this->p_table );
 }
@@ -131,16 +134,16 @@ void
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS1, IRMS1 )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS2, IRMS2 )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS3, IRMS3 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowLTARF, LTARF )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowLTARF, LTARF )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG1, MSG1 )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG2, MSG2 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowNGTF, NGTF )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF_1, NJOURF_1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF, NJOURF )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowNTARF, NTARF )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowNGTF, NGTF )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF_1, NJOURF_1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF, NJOURF )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowNTARF, NTARF )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowPCOUP, PCOUP )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowPJOURF_1, PJOURF_1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowPPOINTE, PPOINTE )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPJOURF_1, PJOURF_1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPPOINTE, PPOINTE )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowPREF, PREF )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowPRM, PRM )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowRELAIS, RELAIS )
@@ -341,7 +344,10 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::LTARF::LABEL )
         {
-            lRow    = ERowLTARF;
+            this->p_tarificationGB->setLTARF(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::MSG1::LABEL )
         {
@@ -359,19 +365,31 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::NGTF::LABEL )
         {
-            lRow    = ERowNGTF;
+            this->p_tarificationGB->setNGTF(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::NJOURF_1::LABEL )
         {
-            lRow    = ERowNJOURF_1;
+            this->p_tarificationGB->setNJOURF_1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::NJOURF::LABEL )
         {
-            lRow    = ERowNJOURF;
+            this->p_tarificationGB->setNJOURF(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::NTARF::LABEL )
         {
-            lRow    = ERowNTARF;
+            this->p_tarificationGB->setNTARF(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PCOUP::LABEL )
         {
@@ -382,11 +400,17 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PJOURF_1::LABEL )
         {
-            lRow    = ERowPJOURF_1;
+            this->p_tarificationGB->setPJOURF_1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PPOINTE::LABEL )
         {
-            lRow    = ERowPPOINTE;
+            this->p_tarificationGB->setPPOINTE(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PREF::LABEL )
         {

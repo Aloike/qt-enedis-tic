@@ -81,7 +81,7 @@ void    GBEnergieActive::clear()
 
 void    GBEnergieActive::setEASD01(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASD01Value,
         C_FIELDWIDTH
@@ -90,7 +90,7 @@ void    GBEnergieActive::setEASD01(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASD02(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASD02Value,
         C_FIELDWIDTH
@@ -99,7 +99,7 @@ void    GBEnergieActive::setEASD02(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASD03(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASD03Value,
         C_FIELDWIDTH
@@ -108,7 +108,7 @@ void    GBEnergieActive::setEASD03(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASD04(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASD04Value,
         C_FIELDWIDTH
@@ -117,7 +117,7 @@ void    GBEnergieActive::setEASD04(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF01(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF01Value,
         C_FIELDWIDTH
@@ -126,7 +126,7 @@ void    GBEnergieActive::setEASF01(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF02(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF02Value,
         C_FIELDWIDTH
@@ -135,7 +135,7 @@ void    GBEnergieActive::setEASF02(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF03(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF03Value,
         C_FIELDWIDTH
@@ -144,7 +144,7 @@ void    GBEnergieActive::setEASF03(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF04(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF04Value,
         C_FIELDWIDTH
@@ -153,7 +153,7 @@ void    GBEnergieActive::setEASF04(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF05(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF05Value,
         C_FIELDWIDTH
@@ -162,7 +162,7 @@ void    GBEnergieActive::setEASF05(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF06(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF06Value,
         C_FIELDWIDTH
@@ -171,7 +171,7 @@ void    GBEnergieActive::setEASF06(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF07(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF07Value,
         C_FIELDWIDTH
@@ -180,7 +180,7 @@ void    GBEnergieActive::setEASF07(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF08(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF08Value,
         C_FIELDWIDTH
@@ -189,7 +189,7 @@ void    GBEnergieActive::setEASF08(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF09(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF09Value,
         C_FIELDWIDTH
@@ -198,7 +198,7 @@ void    GBEnergieActive::setEASF09(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEASF10(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASF10Value,
         C_FIELDWIDTH
@@ -207,7 +207,7 @@ void    GBEnergieActive::setEASF10(const TIC::TDatasetPtr &pDatasetPtr)
 
 void    GBEnergieActive::setEAST(const TIC::TDatasetPtr &pDatasetPtr)
 {
-    Ui::setLabel_fromDataset(
+    Ui::setLabel_fromDatasetInt(
         pDatasetPtr,
         this->ui->EASTValue,
         C_FIELDWIDTH

@@ -14,10 +14,11 @@ class   QVBoxLayout;
 /* Project includes */
 #include "core/comm/protocol/tic/utils.h"
 
+class   GBCourantTension;
 class   GBEnergieActive;
 class   GBInfosCompteur;
 class   GBPuissanceApparente;
-class   GBCourantTension;
+class   GBTarification;
 
 
 
@@ -127,6 +128,7 @@ private:
     QVBoxLayout*            p_layoutReadings;
     GBPuissanceApparente*   p_puissanceApparenteGB;
     QTableWidget*           p_table;
+    GBTarification*         p_tarificationGB;
     GBCourantTension*       p_tensionCourantGB;
 
 
