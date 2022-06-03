@@ -11,6 +11,7 @@
 #include "core/comm/protocol/tic/datasets.h"
 #include "core/comm/protocol/tic/utils.h"
 #include "ui/dataDisplay/GBInfosCompteur.h"
+#include "ui/dataDisplay/GBPuissanceApparente.h"
 
 
 /* ########################################################################## */
@@ -65,6 +66,7 @@ GBDataViewer::GBDataViewer(QWidget *parent)
             parent
         )
     ,   p_infosCompteurGB(new GBInfosCompteur(this))
+    ,   p_puissanceApparenteGB(new GBPuissanceApparente(this))
     ,   p_table(new QTableWidget(this))
 {
     this->_createUi();
@@ -81,6 +83,7 @@ void
     this->p_layoutMain  = new   QVBoxLayout(this);
 
     this->p_layoutMain->addWidget( this->p_infosCompteurGB );
+    this->p_layoutMain->addWidget( this->p_puissanceApparenteGB );
     this->p_layoutMain->addWidget( this->p_table );
 }
 
@@ -128,24 +131,24 @@ void
     M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF_1, NJOURF_1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF, NJOURF )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowNTARF, NTARF )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowPCOUP, PCOUP )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPCOUP, PCOUP )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowPJOURF_1, PJOURF_1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowPPOINTE, PPOINTE )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowPREF, PREF )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPREF, PREF )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowPRM, PRM )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowRELAIS, RELAIS )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS1, SINSTS1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS2, SINSTS2 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS3, SINSTS3 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS, SINSTS )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN1_1, SMAXSN1_1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN_1, SMAXSN_1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN1, SMAXSN1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN2_1, SMAXSN2_1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN2, SMAXSN2 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3_1, SMAXSN3_1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3, SMAXSN3 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN, SMAXSN )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS1, SINSTS1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS2, SINSTS2 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS3, SINSTS3 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS, SINSTS )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN1_1, SMAXSN1_1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN_1, SMAXSN_1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN1, SMAXSN1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN2_1, SMAXSN2_1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN2, SMAXSN2 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3_1, SMAXSN3_1 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3, SMAXSN3 )
+//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN, SMAXSN )
 //    M_TABLEITEMS_FROM_DATASET( p_table, ERowSTGE, STGE )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY1, UMOY1 )
     M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY2, UMOY2 )
@@ -311,7 +314,10 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PCOUP::LABEL )
         {
-            lRow    = ERowPCOUP;
+            this->p_puissanceApparenteGB->setPCOUP(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PJOURF_1::LABEL )
         {
@@ -323,7 +329,10 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PREF::LABEL )
         {
-            lRow    = ERowPREF;
+            this->p_puissanceApparenteGB->setPREF(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::PRM::LABEL )
         {
@@ -341,51 +350,87 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SINSTS1::LABEL )
         {
-            lRow    = ERowSINSTS1;
+            this->p_puissanceApparenteGB->setSINSTS1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SINSTS2::LABEL )
         {
-            lRow    = ERowSINSTS2;
+            this->p_puissanceApparenteGB->setSINSTS2(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SINSTS3::LABEL )
         {
-            lRow    = ERowSINSTS3;
+            this->p_puissanceApparenteGB->setSINSTS3(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SINSTS::LABEL )
         {
-            lRow    = ERowSINSTS;
+            this->p_puissanceApparenteGB->setSINSTS(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SMAXSN1_1::LABEL )
         {
-            lRow    = ERowSMAXSN1_1;
+            this->p_puissanceApparenteGB->setSMAXSN1_1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SMAXSN_1::LABEL )
         {
-            lRow    = ERowSMAXSN_1;
+            this->p_puissanceApparenteGB->setSMAXSN_1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SMAXSN1::LABEL )
         {
-            lRow    = ERowSMAXSN1;
+            this->p_puissanceApparenteGB->setSMAXSN1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SMAXSN2_1::LABEL )
         {
-            lRow    = ERowSMAXSN2_1;
+            this->p_puissanceApparenteGB->setSMAXSN2_1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SMAXSN2::LABEL )
         {
-            lRow    = ERowSMAXSN2;
+            this->p_puissanceApparenteGB->setSMAXSN2(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SMAXSN3_1::LABEL )
         {
-            lRow    = ERowSMAXSN3_1;
+            this->p_puissanceApparenteGB->setSMAXSN3_1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SMAXSN3::LABEL )
         {
-            lRow    = ERowSMAXSN3;
+            this->p_puissanceApparenteGB->setSMAXSN3(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::SMAXSN::LABEL )
         {
-            lRow    = ERowSMAXSN;
+            this->p_puissanceApparenteGB->setSMAXSN(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::STGE::LABEL )
         {

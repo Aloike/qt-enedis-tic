@@ -14,6 +14,7 @@ class   QVBoxLayout;
 #include "core/comm/protocol/tic/utils.h"
 
 class   GBInfosCompteur;
+class   GBPuissanceApparente;
 
 
 
@@ -117,9 +118,10 @@ private:
     };
 
 
-    GBInfosCompteur*    p_infosCompteurGB;
-    QVBoxLayout*        p_layoutMain;
-    QTableWidget*       p_table;
+    GBInfosCompteur*        p_infosCompteurGB;
+    GBPuissanceApparente*   p_puissanceApparenteGB;
+    QVBoxLayout*            p_layoutMain;
+    QTableWidget*           p_table;
 
 
 
