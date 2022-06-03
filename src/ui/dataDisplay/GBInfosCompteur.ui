@@ -40,6 +40,11 @@
         </item>
         <item row="1" column="1">
          <widget class="QLabel" name="labelPRMValue">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -57,6 +62,11 @@
         </item>
         <item row="2" column="1">
          <widget class="QLabel" name="labelADSCValue">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -74,6 +84,11 @@
         </item>
         <item row="3" column="1">
          <widget class="QLabel" name="labelVTICValue">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -91,6 +106,11 @@
         </item>
         <item row="4" column="1">
          <widget class="QLabel" name="labelDATEValue">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -108,6 +128,11 @@
         </item>
         <item row="5" column="1">
          <widget class="QLabel" name="labelMSG1Value">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
           <property name="text">
            <string>12345678901234567890123456789012</string>
           </property>
@@ -125,6 +150,11 @@
         </item>
         <item row="6" column="1">
          <widget class="QLabel" name="labelMSG2Value">
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
           <property name="text">
            <string>1234567890123456</string>
           </property>
@@ -146,6 +176,11 @@
      <layout class="QFormLayout" name="formLayout_2">
       <item row="0" column="1">
        <widget class="QLabel" name="labelRELAISValue_1">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -212,6 +247,11 @@
       </item>
       <item row="1" column="1">
        <widget class="QLabel" name="labelRELAISValue_2">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -222,6 +262,11 @@
       </item>
       <item row="2" column="1">
        <widget class="QLabel" name="labelRELAISValue_3">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -232,6 +277,11 @@
       </item>
       <item row="3" column="1">
        <widget class="QLabel" name="labelRELAISValue_4">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -242,6 +292,11 @@
       </item>
       <item row="4" column="1">
        <widget class="QLabel" name="labelRELAISValue_5">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -252,6 +307,11 @@
       </item>
       <item row="5" column="1">
        <widget class="QLabel" name="labelRELAISValue_6">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -262,6 +322,11 @@
       </item>
       <item row="6" column="1">
        <widget class="QLabel" name="labelRELAISValue_7">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -272,6 +337,11 @@
       </item>
       <item row="7" column="1">
        <widget class="QLabel" name="labelRELAISValue_8">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -298,6 +368,11 @@
       </item>
       <item row="0" column="1">
        <widget class="QLabel" name="STGE_contactSec">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -315,6 +390,11 @@
       </item>
       <item row="1" column="1">
        <widget class="QLabel" name="STGE_organeCoupure">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -332,6 +412,11 @@
       </item>
       <item row="2" column="1">
        <widget class="QLabel" name="STGE_etatCacheBorneDistributeur">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -349,6 +434,11 @@
       </item>
       <item row="3" column="1">
        <widget class="QLabel" name="STGE_presenceSurtension">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -366,6 +456,11 @@
       </item>
       <item row="4" column="1">
        <widget class="QLabel" name="STGE_depassementPuissanceReference">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -390,6 +485,11 @@
       </item>
       <item row="5" column="1">
        <widget class="QLabel" name="STGE_modeFonctionnement">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -400,6 +500,11 @@
       </item>
       <item row="6" column="1">
        <widget class="QLabel" name="STGE_sensEnergieActive">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -417,6 +522,11 @@
       </item>
       <item row="7" column="1">
        <widget class="QLabel" name="STGE_tarifEnCoursFourniture">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -434,6 +544,11 @@
       </item>
       <item row="8" column="1">
        <widget class="QLabel" name="STGE_tarifEnCoursDistributeur">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -451,6 +566,11 @@
       </item>
       <item row="9" column="1">
        <widget class="QLabel" name="STGE_modeHorloge">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -468,6 +588,11 @@
       </item>
       <item row="10" column="1">
        <widget class="QLabel" name="STGE_modeTIC">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -485,6 +610,11 @@
       </item>
       <item row="11" column="1">
        <widget class="QLabel" name="STGE_etatCommEuridis">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -502,6 +632,11 @@
       </item>
       <item row="12" column="1">
        <widget class="QLabel" name="STGE_statutCPL">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -519,6 +654,11 @@
       </item>
       <item row="13" column="1">
        <widget class="QLabel" name="STGE_synchroCPL">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -536,6 +676,11 @@
       </item>
       <item row="14" column="1">
        <widget class="QLabel" name="STGE_couleurTempoJour">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -553,6 +698,11 @@
       </item>
       <item row="15" column="1">
        <widget class="QLabel" name="STGE_couleurTempoLendemain">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -570,6 +720,11 @@
       </item>
       <item row="16" column="1">
        <widget class="QLabel" name="STGE_preavisPointesMobiles">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -587,6 +742,11 @@
       </item>
       <item row="17" column="1">
        <widget class="QLabel" name="STGE_pointeMobileEnCours">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
