@@ -85,12 +85,28 @@ void
 {
     this->p_layoutMain  = new   QHBoxLayout(this);
     this->p_layoutMain->addWidget( this->p_infosCompteurGB );
+    this->p_layoutMain->addWidget( this->p_tarificationGB );
 
     this->p_layoutReadings  = new QVBoxLayout();
     this->p_layoutMain->addLayout(this->p_layoutReadings);
-    this->p_layoutReadings->addWidget( this->p_tarificationGB );
     this->p_layoutReadings->addWidget( this->p_energieActiveGB );
+    this->p_layoutReadings->addSpacerItem(
+        new QSpacerItem(
+            0,
+            0,
+            QSizePolicy::Expanding,
+            QSizePolicy::Expanding
+        )
+    );
     this->p_layoutReadings->addWidget( this->p_puissanceApparenteGB );
+    this->p_layoutReadings->addSpacerItem(
+        new QSpacerItem(
+            0,
+            0,
+            QSizePolicy::Expanding,
+            QSizePolicy::Expanding
+        )
+    );
     this->p_layoutReadings->addWidget( this->p_tensionCourantGB );
 }
 

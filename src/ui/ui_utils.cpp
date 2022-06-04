@@ -44,6 +44,11 @@ namespace Ui {
 
 
 const QString   c_strNoDataTimestamp("@ --/--/---- --:--:-- (-)");
+const QString   c_strNoData2    = "--";
+const QString   c_strNoData12   = "------------";
+const QString   c_strNoData14   = "--------------";
+const QString   c_strNoData16   = "----------------";
+const QString   c_strNoData32   = "--------------------------------";
 
 
 void    setLabel_fromDatasetInt(

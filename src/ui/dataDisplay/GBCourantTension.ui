@@ -20,7 +20,7 @@
    <item>
     <widget class="QGroupBox" name="gbIRMS">
      <property name="title">
-      <string>I RMS</string>
+      <string>Courant efficace</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="1" column="0">
@@ -134,7 +134,7 @@
    <item>
     <widget class="QGroupBox" name="gbURMS">
      <property name="title">
-      <string>U RMS</string>
+      <string>Tension efficace</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="0">
@@ -248,7 +248,7 @@
    <item>
     <widget class="QGroupBox" name="gbUMOY">
      <property name="title">
-      <string>U moyenne</string>
+      <string>Tension moyenne</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="4" column="1">

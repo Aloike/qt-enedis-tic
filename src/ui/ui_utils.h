@@ -11,6 +11,11 @@ class   QLabel;
 namespace Ui {
 
 extern const QString    c_strNoDataTimestamp;
+extern const QString    c_strNoData2;
+extern const QString    c_strNoData12;
+extern const QString    c_strNoData14;
+extern const QString    c_strNoData16;
+extern const QString    c_strNoData32;
 
 void    setLabel_fromDatasetInt(
                 const TIC::TDatasetPtr  &pDataset,

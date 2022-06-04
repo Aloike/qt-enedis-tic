@@ -1,6 +1,8 @@
 #include "GBInfosCompteur.h"
 #include "ui_GBInfosCompteur.h"
 
+#include "ui/ui_utils.h"
+
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -54,11 +56,11 @@ void    GBInfosCompteur::clear()
 {
     const QString   c_defaultText   = "----";
 
-    this->ui->labelADSCValue->setText(c_defaultText);
-    this->ui->labelDATEValue->setText(c_defaultText);
-    this->ui->labelMSG1Value->setText(c_defaultText);
-    this->ui->labelMSG2Value->setText(c_defaultText);
-    this->ui->labelPRMValue->setText(c_defaultText);
+    this->ui->labelADSCValue->setText(Ui::c_strNoData12);
+    this->ui->labelDATEValue->setText(Ui::c_strNoDataTimestamp);
+    this->ui->labelMSG1Value->setText(Ui::c_strNoData32);
+    this->ui->labelMSG2Value->setText(Ui::c_strNoData16);
+    this->ui->labelPRMValue->setText(Ui::c_strNoData14);
     this->ui->labelRELAISValue_1->setText(c_defaultText);
     this->ui->labelRELAISValue_2->setText(c_defaultText);
     this->ui->labelRELAISValue_3->setText(c_defaultText);
@@ -67,7 +69,26 @@ void    GBInfosCompteur::clear()
     this->ui->labelRELAISValue_6->setText(c_defaultText);
     this->ui->labelRELAISValue_7->setText(c_defaultText);
     this->ui->labelRELAISValue_8->setText(c_defaultText);
-    this->ui->labelVTICValue->setText(c_defaultText);
+    this->ui->labelVTICValue->setText(Ui::c_strNoData2);
+
+    this->ui->STGE_contactSec->setText(c_defaultText);
+    this->ui->STGE_couleurTempoJour->setText(c_defaultText);
+    this->ui->STGE_couleurTempoLendemain->setText(c_defaultText);
+    this->ui->STGE_depassementPuissanceReference->setText(c_defaultText);
+    this->ui->STGE_etatCacheBorneDistributeur->setText(c_defaultText);
+    this->ui->STGE_etatCommEuridis->setText(c_defaultText);
+    this->ui->STGE_modeFonctionnement->setText(c_defaultText);
+    this->ui->STGE_modeHorloge->setText(c_defaultText);
+    this->ui->STGE_modeTIC->setText(c_defaultText);
+    this->ui->STGE_organeCoupure->setText(c_defaultText);
+    this->ui->STGE_pointeMobileEnCours->setText(c_defaultText);
+    this->ui->STGE_preavisPointesMobiles->setText(c_defaultText);
+    this->ui->STGE_presenceSurtension->setText(c_defaultText);
+    this->ui->STGE_sensEnergieActive->setText(c_defaultText);
+    this->ui->STGE_statutCPL->setText(c_defaultText);
+    this->ui->STGE_synchroCPL->setText(c_defaultText);
+    this->ui->STGE_tarifEnCoursDistributeur->setText(c_defaultText);
+    this->ui->STGE_tarifEnCoursFourniture->setText(c_defaultText);
 }
 
 void    GBInfosCompteur::setADSC(const QString &pValue)
