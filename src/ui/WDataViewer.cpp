@@ -103,70 +103,6 @@ void
 void
     WDataViewer::_createUi(void)
 {
-    this->p_table->setColumnCount(EColumnsCount);
-    this->p_table->setRowCount(ERowsCount);
-
-//    this->p_table->setItem(
-//            ERowADSC,
-//            EColumnLabel,
-//            new QTableWidgetItem( "ADSC" )
-//        );
-
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowADSC, ADSC )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowCCASN_1, CCASN_1 )
-    M_TABLEITEMS_FROM_DATASET( p_table, ERowCCASN, CCASN )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowDATE, DATE )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD01, EASD01 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD02, EASD02 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD03, EASD03 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASD04, EASD04 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF01, EASF01 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF02, EASF02 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF03, EASF03 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF04, EASF04 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF05, EASF05 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF06, EASF06 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF07, EASF07 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF08, EASF08 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF09, EASF09 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEASF10, EASF10 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowEAST, EAST )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS1, IRMS1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS2, IRMS2 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowIRMS3, IRMS3 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowLTARF, LTARF )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG1, MSG1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowMSG2, MSG2 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowNGTF, NGTF )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF_1, NJOURF_1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowNJOURF, NJOURF )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowNTARF, NTARF )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPCOUP, PCOUP )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPJOURF_1, PJOURF_1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPPOINTE, PPOINTE )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPREF, PREF )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowPRM, PRM )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowRELAIS, RELAIS )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS1, SINSTS1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS2, SINSTS2 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS3, SINSTS3 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSINSTS, SINSTS )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN1_1, SMAXSN1_1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN_1, SMAXSN_1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN1, SMAXSN1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN2_1, SMAXSN2_1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN2, SMAXSN2 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3_1, SMAXSN3_1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN3, SMAXSN3 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSMAXSN, SMAXSN )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowSTGE, STGE )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY1, UMOY1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY2, UMOY2 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowUMOY3, UMOY3 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS1, URMS1 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS2, URMS2 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowURMS3, URMS3 )
-//    M_TABLEITEMS_FROM_DATASET( p_table, ERowVTIC, VTIC )
 }
 
 /* ########################################################################## */
@@ -203,11 +139,17 @@ void
         }
         else if(lDatasetPtr->label() == TIC::Datasets::CCASN_1::LABEL )
         {
-            lRow    = ERowCCASN_1;
+            this->p_energieActiveGB->setCCASN_1(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::CCASN::LABEL )
         {
-            lRow    = ERowCCASN;
+            this->p_energieActiveGB->setCCASN(
+                lDatasetPtr
+            );
+            continue;
         }
         else if(lDatasetPtr->label() == TIC::Datasets::DATE::LABEL )
         {

@@ -58,6 +58,7 @@ GBEnergieActive::~GBEnergieActive()
 
 void    GBEnergieActive::clear()
 {
+    const QString   c_strNoData5W("----- W");
     const QString   c_strNoData9WhA("--------- Wh");
 
     this->ui->EASD01Value->setText(c_strNoData9WhA);
@@ -77,6 +78,31 @@ void    GBEnergieActive::clear()
     this->ui->EASF10Value->setText(c_strNoData9WhA);
 
     this->ui->EASTValue->setText(c_strNoData9WhA);
+
+    this->ui->CCASNValue->setText(c_strNoData5W);
+    this->ui->CCASNTimestamp->setText(Ui::c_strNoDataTimestamp);
+    this->ui->CCASN_1Value->setText(c_strNoData5W);
+    this->ui->CCASN_1Timestamp->setText(Ui::c_strNoDataTimestamp);
+}
+
+void    GBEnergieActive::setCCASN(const TIC::TDatasetPtr &pDatasetPtr)
+{
+    Ui::setLabel_fromDatasetInt(
+        pDatasetPtr,
+        this->ui->CCASNValue,
+        5,
+        this->ui->CCASNTimestamp
+    );
+}
+
+void    GBEnergieActive::setCCASN_1(const TIC::TDatasetPtr &pDatasetPtr)
+{
+    Ui::setLabel_fromDatasetInt(
+        pDatasetPtr,
+        this->ui->CCASN_1Value,
+        5,
+        this->ui->CCASN_1Timestamp
+    );
 }
 
 void    GBEnergieActive::setEASD01(const TIC::TDatasetPtr &pDatasetPtr)

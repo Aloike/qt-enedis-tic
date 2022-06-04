@@ -40,6 +40,9 @@ public:
 
     void    setEAST(const TIC::TDatasetPtr& pDatasetPtr);
 
+    void    setCCASN(const TIC::TDatasetPtr& pDatasetPtr);
+    void    setCCASN_1(const TIC::TDatasetPtr& pDatasetPtr);
+
 
 private:
     Ui::GBEnergieActive *ui;
