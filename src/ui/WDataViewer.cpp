@@ -69,7 +69,6 @@ WDataViewer::WDataViewer(QWidget *parent)
     ,   p_energieActiveGB(new GBEnergieActive(this))
     ,   p_infosCompteurGB(new GBInfosCompteur(this))
     ,   p_puissanceApparenteGB(new GBPuissanceApparente(this))
-    ,   p_table(new QTableWidget(this))
     ,   p_tarificationGB(new GBTarification(this))
     ,   p_tensionCourantGB(new GBCourantTension(this))
 {
@@ -93,8 +92,6 @@ void
     this->p_layoutReadings->addWidget( this->p_energieActiveGB );
     this->p_layoutReadings->addWidget( this->p_puissanceApparenteGB );
     this->p_layoutReadings->addWidget( this->p_tensionCourantGB );
-
-    this->p_layoutMain->addWidget( this->p_table );
 }
 
 /* ########################################################################## */
@@ -115,23 +112,14 @@ void
 {
     foreach( TIC::TDatasetPtr lDatasetPtr, pDatasetsList)
     {
-        int lRow    = -1;
-
         TRACE_DBG(
             "Processing dataset with label '%s'.",
             lDatasetPtr->label().c_str()
         )
 
 
-//        if(lDatasetPtr->label() == TIC::Datasets::ADSC::LABEL )
-//        {
-//            lRow    = ERowADSC;
-////            auto p_dataset
-////                = std::static_pointer_cast<TIC::Datasets::ADCO>(lDatasetPtr);
-//        }
         if(lDatasetPtr->label() == TIC::Datasets::ADSC::LABEL )
         {
-//            lRow    = ERowADSC;
             this->p_infosCompteurGB->setADSC(
                 QString::fromStdString(lDatasetPtr->data())
             );
@@ -523,14 +511,6 @@ void
             )
             continue;
         }
-
-
-        this->p_table->setItem(
-            lRow,
-            EColumnValue,
-            new QTableWidgetItem( QString::fromStdString(lDatasetPtr->data()) )
-        );
-        this->p_table->selectRow(lRow);
     }
 }
 
