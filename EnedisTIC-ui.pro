@@ -1,5 +1,5 @@
 include( $$PWD/config_build.pri )
-include( $$PWD/src/version_git.pri )
+include( $$PWD/version_git.pri )
 
 #DEFINES	+= TEST_DATA_FROM_FILE
 

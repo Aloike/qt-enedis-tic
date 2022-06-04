@@ -35,7 +35,7 @@ VERSION =$${VER_MAJ}.$${VER_MIN}.$${VER_PAT}
 # VERSION_OUTPUT_FILE points to the destination file where the constants will
 #be written
 
-VERSION_OUTPUT_FILE=$$PWD/Version.h
+VERSION_OUTPUT_FILE=$$PWD/src-autogen/Version.h
 
 ###############################################################################
 ###############################################################################
@@ -45,8 +45,12 @@ unix {
 
 target_gitrev.target    =   target_gitrev
 
+# Create the destination directory
+target_gitrev.commands  +=   if [ ! -d \"$\(shell dirname $$VERSION_OUTPUT_FILE\)\" ]; then mkdir -p \"$\(shell dirname $$VERSION_OUTPUT_FILE\)\"; fi
+
 # To erase the old version file
-target_gitrev.commands  =   echo \'/* Auto-generated file ! */\n\' > $$VERSION_OUTPUT_FILE
+target_gitrev.commands  +=  $$escape_expand(\\n\\t) #to go to next makefile line
+target_gitrev.commands  +=   echo \'/* Auto-generated file ! */\n\' > $$VERSION_OUTPUT_FILE
 
 target_gitrev.commands  +=  $$escape_expand(\\n\\t) #to go to next makefile line
 target_gitrev.commands  +=  (echo \"\\043ifndef VERSION_H\" >> $$VERSION_OUTPUT_FILE)
