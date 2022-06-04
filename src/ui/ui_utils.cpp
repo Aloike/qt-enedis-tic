@@ -1,6 +1,7 @@
 #include "ui_utils.h"
 
 #include <QLabel>
+#include <QString>
 
 #include "core/comm/protocol/tic/datasets/AbstractDataset.h"
 
@@ -133,7 +134,7 @@ QString TICProfilJourToText(const QString &pProfilStr)
                     lTimeSlotStr.length(),
                     lTimeSlotStr.toStdString().c_str()
                 );
-                retval  += "\n<" + lTimeSlotStr + ">";
+                retval  += "<" + lTimeSlotStr + ">";
                 continue;
             }
             else if( lTimeSlotStr == "NONUTILE" )
@@ -146,86 +147,100 @@ QString TICProfilJourToText(const QString &pProfilStr)
                 const QString   c_prefix_dataLineL1("\n+-- ");
                 const QString   c_prefix_dataLineL2("\n    +-- ");
 
+                if( ! retval.isEmpty() )
+                {
+                    retval  += "\n------------------------------\n";
+                }
+
                 /* Extract time */
-                retval  += "\n";
                 retval  += lTimeSlotStr.mid(0, 2);
                 retval  += ":";
                 retval  += lTimeSlotStr.mid(2, 2);
 
                 /* Extract action value */
+                QString lTmpStr;
+                lTmpStr = "0x" + lTimeSlotStr.mid(4, 4);
+
                 uint16_t    lActionValue    = 0x0000;
-                lActionValue    += (lTimeSlotStr.at(4).toLatin1() - '0') << 12;
-                lActionValue    += (lTimeSlotStr.at(5).toLatin1() - '0') << 8;
-                lActionValue    += (lTimeSlotStr.at(6).toLatin1() - '0') << 4;
-                lActionValue    += (lTimeSlotStr.at(7).toLatin1() - '0');
-
-
-                /* Generate action strings */
-                uint16_t    lTmpUInt;
-
-                lTmpUInt    = (lActionValue & 0x000F);
-                retval  += c_prefix_dataLineL1 + "Idx. Ventilation: ";
-                if( lTmpUInt == 0 )
+                bool    lTmpBool    = false;
+                lActionValue    = lTmpStr.toUInt(&lTmpBool, 16);
+                if( ! lTmpBool )
                 {
-                    retval  += "Inchangé";
-                }
-                else if(    lTmpUInt >= 1U
-                        &&  lTmpUInt <= 10U )
-                {
-                    retval  += QString::asprintf(
-                        "Idx %2u",
-                        lTmpUInt
-                    );
+                    TRACE_ERR(
+                        "Unable to convert string to hex! ('%s')",
+                        lTmpStr.toStdString().c_str()
+                    )
+                    retval  += "<Conv. error::" + lTmpStr + ">";
                 }
                 else
                 {
-                    retval  += QString::asprintf(
-                        "Inchangé %2u",
-                        lTmpUInt
-                    );
-                }
+                    /* Generate action strings */
+                    uint16_t    lTmpUInt;
 
-                retval  += c_prefix_dataLineL1 + "Contact sec: ";
-                lTmpUInt    = (lActionValue & 0xC000);
-                switch(lTmpUInt)
-                {
-                    case 0x0000:
-                        retval  += "Aucune manoeuvre.";
-                        break;
-
-                    case 0x4000:
-                        retval  += "Tempo.";
-                        break;
-
-                    case 0x8000:
-                        retval  += "Ouverture.";
-                        break;
-
-                    case 0xC000:
-                        retval  += "Fermeture.";
-                        break;
-
-                    default:
-                        retval  += "??";
-                        break;
-                }
-
-                retval  += c_prefix_dataLineL1 + "Contacts virtuels:";
-                lTmpUInt    = (lActionValue & 0x07F0) >> 4;
-                for( uint8_t lContactNbr = 0 ; lContactNbr < 7 ; ++lContactNbr )
-                {
-                    retval  += c_prefix_dataLineL2;
-                    retval  += QString::asprintf(
-                        "Contact %u: ",
-                        lContactNbr + 1
-                    );
-                    if( lTmpUInt & (0x0001 << lContactNbr) )
+                    lTmpUInt    = (lActionValue & 0x000F);
+                    retval  += c_prefix_dataLineL1 + "Idx. Ventilation: ";
+                    if( lTmpUInt == 0 )
                     {
-                        retval  += "Fermé";
+                        retval  += "Inchangé";
+                    }
+                    else if(    lTmpUInt >= 1U
+                            &&  lTmpUInt <= 10U )
+                    {
+                        retval  += QString::asprintf(
+                            "Idx %2u",
+                            lTmpUInt
+                        );
                     }
                     else
                     {
-                        retval  += "Ouvert";
+                        retval  += QString::asprintf(
+                            "Inchangé %2u",
+                            lTmpUInt
+                        );
+                    }
+
+                    retval  += c_prefix_dataLineL1 + "Contact sec: ";
+                    lTmpUInt    = (lActionValue & 0xC000);
+                    switch(lTmpUInt)
+                    {
+                        case 0x0000:
+                            retval  += "Aucune manoeuvre.";
+                            break;
+
+                        case 0x4000:
+                            retval  += "Tempo.";
+                            break;
+
+                        case 0x8000:
+                            retval  += "Ouverture.";
+                            break;
+
+                        case 0xC000:
+                            retval  += "Fermeture.";
+                            break;
+
+                        default:
+                            retval  += "??";
+                            break;
+                    }
+
+                    retval  += c_prefix_dataLineL1 + "Contacts virtuels:";
+                    lTmpUInt    = (lActionValue & 0x07F0) >> 4;
+                    for( uint8_t lContactNbr = 0 ; lContactNbr < 7 ; ++lContactNbr )
+                    {
+                        retval  += c_prefix_dataLineL2;
+                        retval  += QString::asprintf(
+                            "Contact %u: ",
+                            lContactNbr + 1
+                        );
+                        if( lTmpUInt & (0x0001 << lContactNbr) )
+                        {
+                            retval  += "Fermé";
+                        }
+                        else
+                        {
+                            retval  += "Ouvert";
+                        }
                     }
                 }
             }
