@@ -62,6 +62,8 @@ public:
 protected:
 private:
 
+    size_t          m_datasetsCount;
+    size_t          m_framesCount;
     QByteArray      m_inputBuffer;
 
     std::unique_ptr<TIC::FrameProcessor>    p_frameProcessor;

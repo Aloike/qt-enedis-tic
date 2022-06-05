@@ -10,6 +10,7 @@
 #include <QFile>
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QStatusBar>
 
 /* Project includes */
 #include "core/comm/protocol/tic/FrameProcessor.h"
@@ -62,6 +63,9 @@ static const QString    C_TESTDATA_FILE
 
 MainController::MainController(void)
     :   QObject()
+    ,   m_datasetsCount( 0U )
+    ,   m_framesCount( 0U )
+    ,   m_inputBuffer()
     ,   p_frameProcessor(std::make_unique<TIC::FrameProcessor>())
     ,   p_mainWindow(new MainWindow())
     ,   p_outputFile(new QFile(this))
@@ -434,10 +438,16 @@ void
                 lFrame.length()
             )
 
+            this->m_framesCount++;
+            this->p_mainWindow->setFramesCount(this->m_framesCount);
+
             try
             {
                 TIC::TDatasetsPtrList  lDatasetsList
                     = this->p_frameProcessor->decode( lFrame.toStdString() );
+
+                this->m_datasetsCount   += lDatasetsList.size();
+                this->p_mainWindow->setDatasetsCount(this->m_datasetsCount);
 
                 this->p_mainWindow->updateData( lDatasetsList );
             }
@@ -447,6 +457,11 @@ void
                     "A runtime error occured: %s",
                     e.what()
                 )
+
+                this->p_mainWindow->statusBar()->showMessage(
+                    e.what(),
+                    10
+                );
             }
         }
     }   while( ! lFrame.isEmpty() );

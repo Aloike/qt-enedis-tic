@@ -101,7 +101,6 @@ HEADERS	+= src/ui/MainWindow.h
 HEADERS	+= src/ui/TBSerialConfig.h
 HEADERS	+= src/ui/ui_utils.h
 HEADERS	+= src/ui/WDataViewer.h
-HEADERS	+= src/Version.h
 
 SOURCES	+= src/core/comm/protocol/tic/DatasetFactory.cpp
 SOURCES	+= src/core/comm/protocol/tic/datasets/AbstractDataset.cpp

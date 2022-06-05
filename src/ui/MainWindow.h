@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+class   QLabel;
 class   QVBoxLayout;
 
 #include "core/comm/protocol/tic/utils.h"
@@ -27,6 +28,9 @@ public:
 
     void    updateData(const TIC::TDatasetsPtrList& pDatasetsList);
 
+    void    setFramesCount(const size_t& pCount);
+    void    setDatasetsCount(const size_t& pCount);
+
 
 
 private:
@@ -38,8 +42,10 @@ private:
 
 private:
 
-    TBSerialConfig* p_serialConfigTB;
     WDataViewer*    p_dataViewerW;
+    QLabel*         p_labelStatusDatasetsCount;
+    QLabel*         p_labelStatusFramesCount;
+    TBSerialConfig* p_serialConfigTB;
 
 };
 

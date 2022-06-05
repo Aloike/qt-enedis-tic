@@ -54,7 +54,7 @@ private:
     GBEnergieActive*        p_energieActiveGB;
     GBInfosCompteur*        p_infosCompteurGB;
     QHBoxLayout*            p_layoutMain;
-    QVBoxLayout*            p_layoutReadings;
+    QVBoxLayout*            p_layoutConsumption;
     GBPuissanceApparente*   p_puissanceApparenteGB;
     GBTarification*         p_tarificationGB;
     GBCourantTension*       p_tensionCourantGB;
