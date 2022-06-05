@@ -1,5 +1,6 @@
 TEMPLATE    = subdirs
 
+SUBDIRS	+= enedisTIC/enedisTIC.pro
 SUBDIRS	+= enedisTIC-ui/enedisTIC-ui.pro
 
 
