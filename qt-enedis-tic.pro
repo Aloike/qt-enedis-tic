@@ -1,11 +1,7 @@
-include( $$PWD/config_build.pri )
-include( $$PWD/version_git.pri )
+TEMPLATE    = subdirs
 
-#DEFINES	+= TEST_DATA_FROM_FILE
+SUBDIRS	+= enedisTIC-ui/enedisTIC-ui.pro
 
-INCLUDEPATH += $$PWD/src
-
-include( $$PWD/src.pri )
 
 OTHER_FILES += LICENSE.md
 OTHER_FILES += README.md

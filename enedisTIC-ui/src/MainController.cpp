@@ -53,7 +53,9 @@
 /* ########################################################################## */
 
 static const QString    C_TESTDATA_FILE
-    = "../tests/data/samples/tic-standard-1phase-live_30s_raw.dat";
+//    = "../tests/data/samples/tic-standard-1phase-live_30s_raw.dat";
+    = "../tests/data/samples/tic-standard-1phase-live_HC.raw.hex";
+//    = "../tests/data/samples/tic-standard-1phase-live_HP.raw.hex";
 //        "../tests/data/samples/tic-historical-3phase-1min.raw.dat"
 //        "../tests/data/samples/tic-standard-singleFrame.dat"
 //        "../tests/data/samples/tic-standard-1phase.raw.dat";
