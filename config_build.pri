@@ -47,7 +47,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 ##  @brief  The DESTDIR variable defines where the generated target will be made
 ##          available.
-DESTDIR = $$PWD/out
+DESTDIR = out
 
 
 ##  This section defines the prefix of build directories depending on the build
