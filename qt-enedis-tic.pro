@@ -6,3 +6,6 @@ include( $$PWD/version_git.pri )
 INCLUDEPATH += $$PWD/src
 
 include( $$PWD/src.pri )
+
+OTHER_FILES += LICENSE.md
+OTHER_FILES += README.md
