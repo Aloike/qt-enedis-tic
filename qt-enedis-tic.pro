@@ -1,11 +1,18 @@
-include( $$PWD/config_build.pri )
-include( $$PWD/version_git.pri )
+TEMPLATE    = subdirs
 
-#DEFINES	+= TEST_DATA_FROM_FILE
-
-INCLUDEPATH += $$PWD/src
-
-include( $$PWD/src.pri )
 
 OTHER_FILES += LICENSE.md
 OTHER_FILES += README.md
+
+
+SUBDIRS	+= enedisTIC/enedisTIC.pro
+SUBDIRS	+= enedisTIC-ui/enedisTIC-ui.pro
+
+
+# where to find the sub projects - give the folders
+enedisTIC.subdir    = enedisTIC
+enedisTIC-ui.subdir = enedisTIC-ui
+
+
+# what subproject depends on others
+enedisTIC-ui.depends = enedisTIC

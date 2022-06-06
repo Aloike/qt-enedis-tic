@@ -7,6 +7,9 @@
 This Qt software is a simple application to visualize "télé-information client"
 data from Enedis power meters's information output.
 
+It is split into several modules, so the decoding lib can be used independently
+from the UI.
+
 
 ### Disclaimer
 
@@ -44,13 +47,33 @@ root folder:
     ~~~~~
 
 
-Then the generated binary is available under `out/`.
+Then the generated binary is available under `out/` in each sub-directory.
+
++ Optional: Install it on your system
+  ~~~~~{sh}
+  $ sudo make install
+  # Then you will probably need to call...
+  $ sudo ldconfig
+  #...to update shared library bindings, otherwise it won't be found at runtime.
+  ~~~~~
++ Uninstall:
+  ~~~~~{sh}
+  $ sudo make uninstall
+  ~~~~~
 
 
 ## Usage
 
 1. Connect your serial interface from the power meter to the computer.
 2. Start the program.
+   + From the local build directory:
+     ~~~~~{sh}
+     $ LD_LIBRARY_PATH=enedisTIC/out/ ./enedisTIC-ui/out/enedisTIC-ui
+     ~~~~~
+   + From the system install:
+     ~~~~~{sh}
+     $ enedisTIC-ui
+     ~~~~~
 3. In the toolbar at the top of the screen, choose the serial port on which the
 power meter is connected, choose the TIC mode, then click the `Open`
 push button.
