@@ -56,3 +56,23 @@ MOC_DIR     = $$BUILDDIR/moc
 OBJECTS_DIR = $$BUILDDIR/obj
 RCC_DIR     = $$BUILDDIR/rcc
 UI_DIR      = $$BUILDDIR/ui
+
+
+# ##############################################################################
+## Default rules for deployment.
+# ##############################################################################
+equals(TEMPLATE, app) {
+    lUnixDestdir=bin
+} else:equals(TEMPLATE, lib) {
+    lUnixDestdir=lib
+} else {
+    message("Unknown template type")
+}
+
+
+qnx: target.path = /tmp/$${TARGET}/$${lUnixDestdir}
+else: unix:!android: {
+    INSTALL_PREFIX=/usr/local
+    target.path = $$INSTALL_PREFIX/$${lUnixDestdir}
+}
+!isEmpty(target.path): INSTALLS += target

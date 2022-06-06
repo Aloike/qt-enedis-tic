@@ -6,12 +6,6 @@ include( $$PWD/../version_git.pri )
 
 #DEFINES	+= TEST_DATA_FROM_FILE
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
-
 # ##############################################################################
 ## Declaration of Qt modules used in the project
 # ##############################################################################

@@ -32,12 +32,7 @@ INCLUDEPATH += $$PWD/src
 
 # Target to install public headers
 public_headers.files = include/*
-INSTALLS += public_headers
-
-# Default rules for deployment.
-unix {
-    INSTALL_PREFIX=/usr/local
-    public_headers.path = $$INSTALL_PREFIX/include
-    target.path = $$INSTALL_PREFIX/lib
+unix:!android: {
+     public_headers.path = $$INSTALL_PREFIX/include
 }
-!isEmpty(target.path): INSTALLS += target
+INSTALLS += public_headers
