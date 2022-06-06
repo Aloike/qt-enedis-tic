@@ -12,7 +12,7 @@ class   QTableWidget;
 class   QVBoxLayout;
 
 /* Project includes */
-#include "core/comm/protocol/tic/utils.h"
+#include <enedisTIC/utils.h>
 
 class   GBCourantTension;
 class   GBEnergieActive;

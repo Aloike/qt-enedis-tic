@@ -13,7 +13,8 @@
 #include <QStatusBar>
 
 /* Project includes */
-#include "core/comm/protocol/tic/FrameProcessor.h"
+#include <enedisTIC/FrameProcessor.h>
+
 #include "ui/MainWindow.h"
 #include "ui/TBSerialConfig.h"
 

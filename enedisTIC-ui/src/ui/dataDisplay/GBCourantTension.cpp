@@ -1,7 +1,8 @@
 #include "GBCourantTension.h"
 #include "ui_GBCourantTension.h"
 
-#include "core/comm/protocol/tic/datasets/AbstractDataset.h"
+#include <enedisTIC/datasets/AbstractDataset.h>
+
 #include "ui/ui_utils.h"
 
 

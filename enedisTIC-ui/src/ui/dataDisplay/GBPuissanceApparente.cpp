@@ -1,7 +1,7 @@
 #include "GBPuissanceApparente.h"
 #include "ui_GBPuissanceApparente.h"
 
-#include "core/comm/protocol/tic/datasets/AbstractDataset.h"
+#include <enedisTIC/datasets/AbstractDataset.h>
 
 
 /* ########################################################################## */

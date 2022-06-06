@@ -9,8 +9,9 @@
 #include <QVBoxLayout>
 
 /* Project includes */
-#include "core/comm/protocol/tic/datasets.h"
-#include "core/comm/protocol/tic/utils.h"
+#include <enedisTIC/datasets.h>
+#include <enedisTIC/utils.h>
+
 #include "ui/dataDisplay/GBCourantTension.h"
 #include "ui/dataDisplay/GBEnergieActive.h"
 #include "ui/dataDisplay/GBInfosCompteur.h"

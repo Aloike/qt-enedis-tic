@@ -5,7 +5,7 @@
 #include <QString>
 class   QLabel;
 
-#include "core/comm/protocol/tic/utils.h"
+#include <enedisTIC/utils.h>
 
 
 namespace Ui {

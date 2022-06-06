@@ -6,7 +6,8 @@
 class   QLabel;
 class   QVBoxLayout;
 
-#include "core/comm/protocol/tic/utils.h"
+#include <enedisTIC/utils.h>
+
 class   TBSerialConfig;
 class   WDataViewer;
 

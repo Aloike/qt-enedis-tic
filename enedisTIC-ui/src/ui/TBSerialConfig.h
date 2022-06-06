@@ -9,7 +9,7 @@ class   QPushButton;
 class   QRadioButton;
 
 /* Project includes */
-#include "core/comm/protocol/tic/utils.h"
+#include <enedisTIC/utils.h>
 class   CComboBox;
 
 
