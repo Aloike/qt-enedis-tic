@@ -1,7 +1,8 @@
 TEMPLATE    = lib
 TARGET      = enedisTIC
+CONFIG += staticlib
 
-include( $$PWD/../config_build.pri )
+include( $$PWD/../../../config_build.pri )
 CONFIG += c++11
 CONFIG -= qt
 

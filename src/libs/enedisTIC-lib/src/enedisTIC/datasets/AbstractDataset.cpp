@@ -17,6 +17,7 @@ namespace Datasets {
 /* ########################################################################## */
 /* ########################################################################## */
 
+const size_t    AbstractDataset::C_LABEL_LENGTH     = 8;
 const size_t    AbstractDataset::C_TIMESTAMP_LENGTH = 13;
 
 /* ########################################################################## */
@@ -90,6 +91,58 @@ size_t
     AbstractDataset::dataLength() const
 {
     return this->m_dataLength;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+std::string
+    AbstractDataset::extractLabel(
+        const std::string &pDatasetStr
+    )
+{
+    TeTICMode lLinkyMode  = dataset_getType(pDatasetStr);
+    char        lSpacingChar    = dataset_spacingChar( lLinkyMode );
+
+    /* Check label length */
+    size_t lIdxLabelEnd    = pDatasetStr.find(
+        lSpacingChar,
+        C_CHARIDX_LABELSTART
+    );
+    if( lIdxLabelEnd == std::string::npos )
+    {
+        throw std::runtime_error(
+            "In " + std::string(__PRETTY_FUNCTION__) + ": "
+            + "Unable to find spacing char separator after label!"
+            " (from data '" + pDatasetStr + "')"
+        );
+    }
+    if( lIdxLabelEnd > (C_CHARIDX_LABELSTART + C_LABEL_LENGTH) )
+    {
+        throw std::runtime_error(
+            "In " + std::string(__PRETTY_FUNCTION__) + ": "
+            + "Invalid label length!"
+            " (expected length of less than "
+            + std::to_string(C_LABEL_LENGTH)
+            + ", got "
+            + std::to_string(lIdxLabelEnd - C_CHARIDX_LABELSTART)
+            + " from data '" + pDatasetStr + "')"
+        );
+    }
+
+    /* Extract the label */
+    std::string retval  = pDatasetStr.substr(
+            C_CHARIDX_LABELSTART,
+            lIdxLabelEnd - C_CHARIDX_LABELSTART
+    );
+
+#ifdef  TRACE_DEBUG
+    std::cout
+        <<  __FILE__ << " +" << __LINE__ << " \t"
+        <<  "retval: '" + retval + "'"
+        << std::endl;
+#endif
+    return retval;
 }
 
 /* ########################################################################## */
@@ -254,17 +307,17 @@ void
     /* Check label length */
     size_t lIdxLabelEnd    = pDatasetStr.find(
         lSpacingChar,
-        C_DATASET_IDX_LABELSTART
+        C_CHARIDX_LABELSTART
     );
-    if(     lIdxLabelEnd > (C_DATASET_IDX_LABELSTART + C_DATASET_LABEL_LENGTH)
+    if(     lIdxLabelEnd > (C_CHARIDX_LABELSTART + C_LABEL_LENGTH)
         ||  lIdxLabelEnd == std::string::npos )
     {
         throw std::runtime_error(
             "Invalid label length!"
             " (expected length of less than "
-            + std::to_string(C_DATASET_LABEL_LENGTH)
+            + std::to_string(C_LABEL_LENGTH)
             + ", got "
-            + std::to_string(lIdxLabelEnd - C_DATASET_IDX_LABELSTART)
+            + std::to_string(lIdxLabelEnd - C_CHARIDX_LABELSTART)
             + " from data '" + pDatasetStr + "')"
         );
     }
@@ -293,7 +346,9 @@ void
      */
 
     /* Extract the label */
-    std::string lLabelStr   = TIC::extractLabel(pDatasetStr);
+    std::string lLabelStr   = TIC::Datasets::AbstractDataset::extractLabel(
+        pDatasetStr
+    );
 
     if( lLabelStr != this->label() )
     {

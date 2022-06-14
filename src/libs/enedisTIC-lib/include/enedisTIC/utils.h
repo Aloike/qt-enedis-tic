@@ -20,8 +20,6 @@ extern const char   CHAR_LF;
 extern const char   CHAR_HT;
 extern const char   CHAR_SP;
 
-extern const size_t C_DATASET_LABEL_LENGTH;
-
 typedef enum    ETICMode   {
     E_TIC_MODE_HISTORICAL,
     E_TIC_MODE_STANDARD
@@ -33,8 +31,6 @@ typedef std::list<TDatasetPtr>                      TDatasetsPtrList;
 
 
 unsigned char   calculateChecksum(const std::string& pPayload);
-
-std::string     extractLabel(const std::string&  pDatasetStr);
 
 TeTICMode       dataset_getType(const std::string& pDatasetStr);
 char            dataset_spacingChar(
