@@ -23,9 +23,6 @@ const char  CHAR_LF = 0x0A;
 const char  CHAR_HT = 0x09;
 const char  CHAR_SP = 0x20;
 
-//const size_t    C_DATASET_IDX_LABELSTART    = 1;
-const size_t C_DATASET_LABEL_LENGTH = 8;
-
 /* ########################################################################## */
 /* ########################################################################## */
 
@@ -103,56 +100,6 @@ char    dataset_spacingChar(const TeTICMode pMode)
     }
 
 
-    return retval;
-}
-
-/* ########################################################################## */
-/* ########################################################################## */
-
-std::string
-extractLabel(const std::string &pDatasetStr )
-{
-    TeTICMode lLinkyMode  = dataset_getType(pDatasetStr);
-    char        lSpacingChar    = dataset_spacingChar( lLinkyMode );
-
-    /* Check label length */
-    size_t lIdxLabelEnd    = pDatasetStr.find(
-        lSpacingChar,
-        C_DATASET_IDX_LABELSTART
-    );
-    if( lIdxLabelEnd == std::string::npos )
-    {
-        throw std::runtime_error(
-            "In " + std::string(__PRETTY_FUNCTION__) + ": "
-            + "Unable to find spacing char separator after label!"
-            " (from data '" + pDatasetStr + "')"
-        );
-    }
-    if( lIdxLabelEnd > (C_DATASET_IDX_LABELSTART + C_DATASET_LABEL_LENGTH) )
-    {
-        throw std::runtime_error(
-            "In " + std::string(__PRETTY_FUNCTION__) + ": "
-            + "Invalid label length!"
-            " (expected length of less than "
-            + std::to_string(C_DATASET_LABEL_LENGTH)
-            + ", got "
-            + std::to_string(lIdxLabelEnd - C_DATASET_IDX_LABELSTART)
-            + " from data '" + pDatasetStr + "')"
-        );
-    }
-
-    /* Extract the label */
-    std::string retval  = pDatasetStr.substr(
-            C_DATASET_IDX_LABELSTART,
-            lIdxLabelEnd - C_DATASET_IDX_LABELSTART
-    );
-
-#ifdef  TRACE_DEBUG
-    std::cout
-        <<  __FILE__ << " +" << __LINE__ << " \t"
-        <<  "retval: '" + retval + "'"
-        << std::endl;
-#endif
     return retval;
 }
 

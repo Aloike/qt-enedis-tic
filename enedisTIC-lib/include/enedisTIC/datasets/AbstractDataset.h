@@ -23,6 +23,8 @@ class   LIBENEDISTIC_EXPORT AbstractDataset
 {
 public:
 
+    static std::string  extractLabel(const std::string&  pDatasetStr);
+
     /* Fixed data */
     std::string label(void) const;
     bool        hasTimestamp(void) const;
@@ -75,6 +77,28 @@ private:
 public:
 protected:
 
+    /* <LF> <--LABEL--> [<HT> <--TIMESTAMP-->] <HT> <-- DATA --> <HT> <--CS--> <CR>
+     * + LABEL
+     *   + is strictly 8 chars long.
+     * + Timestamp:
+     *   + Not always available.
+     *   + 13 chars long.
+     *   + Format: [SAAMMJJhhmmss]
+     * + DATA
+     *   + length is variable.
+     * + CS / checksum
+     *   + 1 char long.
+     */
+    enum ECharsIndex {
+        C_CHARIDX_LF                = 0,
+        C_CHARIDX_LABELSTART        = 1,
+        C_CHARIDX_LABELEND          = 8,
+        C_CHARIDX_HT_LT             = 9,
+        C_CHARIDX_TIMESTAMPSTART    = 10,
+        C_CHARIDX_TIMESTAMPEND      = 22,
+    };
+
+    static const size_t C_LABEL_LENGTH;
     static const size_t C_TIMESTAMP_LENGTH;
 
     const size_t        m_dataLength;
