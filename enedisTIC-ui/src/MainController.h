@@ -13,6 +13,8 @@ class   QFile;
 class   QSerialPort;
 
 /* Project includes */
+#include <enedisTIC/utils.h>
+
 class   MainWindow;
 
 namespace TIC {
@@ -43,6 +45,10 @@ private:
     void    initialize(void);
 
     void    updateSerialPortsList(void);
+
+    void    inputOpen(const QString& pInputPath, const TIC::TeTICMode& pMode);
+    void    inputClose(void);
+    bool    inputIsOpen(void) const;
 
     void    processInputBuffer(void);
     QByteArray  extractFrameFromBuffer(void);
