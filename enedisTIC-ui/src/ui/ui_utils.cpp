@@ -130,7 +130,7 @@ QString TICProfilJourToText(const QString &pProfilStr)
         );
 
 
-        foreach( QString lTimeSlotStr, lTimeSlotsList )
+        for( QString lTimeSlotStr : lTimeSlotsList )
         {
             if( lTimeSlotStr.length() != 8 )
             {

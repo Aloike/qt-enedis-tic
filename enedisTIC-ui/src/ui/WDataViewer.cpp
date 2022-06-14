@@ -131,7 +131,7 @@ void
         const TIC::TDatasetsPtrList &pDatasetsList
     )
 {
-    foreach( TIC::TDatasetPtr lDatasetPtr, pDatasetsList)
+    for( TIC::TDatasetPtr lDatasetPtr : pDatasetsList)
     {
         TRACE_DBG(
             "Processing dataset with label '%s'.",

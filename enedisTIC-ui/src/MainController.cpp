@@ -478,8 +478,8 @@ MainController::updateSerialPortsList(void)
 {
     QStringList lPortsList;
 
-    foreach( QSerialPortInfo lPortInfo,
-             QSerialPortInfo::availablePorts() )
+    for(    QSerialPortInfo lPortInfo
+        :   QSerialPortInfo::availablePorts() )
     {
         lPortsList.append( lPortInfo.systemLocation() );
         TRACE_DBG(
