@@ -1,8 +1,8 @@
 TEMPLATE    = app
 TARGET      = enedisTIC-ui
 
-include( $$PWD/../config_build.pri )
-include( $$PWD/../version_git.pri )
+include( $$PWD/../../../config_build.pri )
+include( $$PWD/../../../version_git.pri )
 
 #DEFINES	+= TEST_DATA_FROM_FILE
 
@@ -21,7 +21,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 ## Internal libs
 # ##############################################################################
 
-DIR_ENEDISTICLIB=$$OUT_PWD/../enedisTIC-lib
+DIR_ENEDISTICLIB=$$OUT_PWD/../../libs/enedisTIC-lib
 win32:CONFIG(release, debug|release):       LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC
 else:win32:CONFIG(debug, debug|release):    LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC_d
 else:unix: CONFIG(debug, debug|release):    LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC_d

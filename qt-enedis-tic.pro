@@ -5,13 +5,13 @@ OTHER_FILES += LICENSE.md
 OTHER_FILES += README.md
 
 
-SUBDIRS	+= enedisTIC-lib/enedisTIC-lib.pro
-SUBDIRS	+= enedisTIC-ui/enedisTIC-ui.pro
+SUBDIRS	+= src/libs/enedisTIC-lib/enedisTIC-lib.pro
+SUBDIRS	+= src/apps/enedisTIC-ui/enedisTIC-ui.pro
 
 
 # where to find the sub projects - give the folders
-enedisTIC-lib.subdir    = enedisTIC-lib
-enedisTIC-ui.subdir = enedisTIC-ui
+enedisTIC-lib.subdir    = src/libs/enedisTIC-lib
+enedisTIC-ui.subdir = src/apps/enedisTIC-ui
 
 
 # what subproject depends on others
