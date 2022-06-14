@@ -1,6 +1,6 @@
 TEMPLATE    = lib
 TARGET      = enedisTIC
-#CONFIG += staticlib
+CONFIG += staticlib
 
 include( $$PWD/../../../config_build.pri )
 CONFIG += c++11
