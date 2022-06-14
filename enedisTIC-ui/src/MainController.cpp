@@ -121,12 +121,7 @@ void
 QByteArray
     MainController::extractFrameFromBuffer(void)
 {
-#if 1
     const char  c_endOfFrame    = TIC::CHAR_ETX;
-#else
-#warning for test purpose only!
-    const char  c_endOfFrame    = TIC::CHAR_STX;
-#endif
     const char  c_startOfFrame  = TIC::CHAR_STX;
 
     QByteArray  retval;

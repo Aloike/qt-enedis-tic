@@ -20,29 +20,6 @@ extern const char   CHAR_LF;
 extern const char   CHAR_HT;
 extern const char   CHAR_SP;
 
-//extern const size_t    C_DATASET_IDX_LABELSTART;
-
-/* <LF> <--LABEL--> [<HT> <--TIMESTAMP-->] <HT> <-- DATA --> <HT> <--CS--> <CR>
- * + LABEL
- *   + is strictly 8 chars long.
- * + Timestamp:
- *   + Not always available.
- *   + 13 chars long.
- *   + Format: [SAAMMJJhhmmss]
- * + DATA
- *   + length is variable.
- * + CS / checksum
- *   + 1 char long.
- */
-enum EDatasetCharIndex {
-    C_DATASET_IDX_LF                = 0,
-    C_DATASET_IDX_LABELSTART        = 1,
-    C_DATASET_IDX_LABELEND          = 8,
-    C_DATASET_IDX_HT_LT             = 9,
-    C_DATASET_IDX_TIMESTAMPSTART    = 10,
-    C_DATASET_IDX_TIMESTAMPEND      = 22,
-};
-
 extern const size_t C_DATASET_LABEL_LENGTH;
 
 typedef enum    ETICMode   {
