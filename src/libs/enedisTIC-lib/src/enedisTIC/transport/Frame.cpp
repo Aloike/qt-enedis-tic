@@ -16,6 +16,9 @@
 namespace   TIC {
 namespace   Transport {
 
+const char  Frame::START_OF_FRAME   = TIC::CHAR_STX;
+const char  Frame::END_OF_FRAME     = TIC::CHAR_ETX;
+
 /* ########################################################################## */
 /* ########################################################################## */
 
@@ -40,9 +43,9 @@ std::string
 {
     std::string retval;
 
-    retval  += CHAR_STX;
+    retval  += START_OF_FRAME;
 
-    retval  += CHAR_ETX;
+    retval  += END_OF_FRAME;
 
     return retval;
 }
@@ -56,14 +59,14 @@ void
     /*
      *  Check pre-conditions
      */
-    if( pData[0] != TIC::CHAR_STX )
+    if( pData[0] != START_OF_FRAME )
     {
-        throw std::runtime_error("pData doesn't start with STX!");
+        throw std::runtime_error("pData doesn't start with a Start Of Frame!");
     }
 
-    if( pData[pData.length() - 1] != TIC::CHAR_ETX )
+    if( pData[pData.length() - 1] != END_OF_FRAME )
     {
-        throw std::runtime_error("pData doesn't end with ETX!");
+        throw std::runtime_error("pData doesn't end with an End Of Frame!");
     }
 
     /*

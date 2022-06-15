@@ -1,6 +1,6 @@
 #include <QTest>
 
-#include "testrunner.h"
+//#include "testrunner.h"
 
 //#include "InfluxMeasurement_tst.h"
 //#include "tst_MyTestCase.h"

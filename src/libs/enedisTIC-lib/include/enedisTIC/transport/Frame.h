@@ -43,6 +43,11 @@ private:
 
 
 public:
+
+    static const char   START_OF_FRAME;
+    static const char   END_OF_FRAME;
+
+
 protected:
 private:
 

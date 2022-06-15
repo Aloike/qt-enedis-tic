@@ -27,14 +27,22 @@ INCLUDEPATH += $$PWD/../../src/
 
 
 DIR_ENEDISTICLIB=$$OUT_PWD/../../src/libs/enedisTIC-lib
-win32:CONFIG(release, debug|release):       LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC
-else:win32:CONFIG(debug, debug|release):    LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC_d
-else:unix: CONFIG(debug, debug|release):    LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC_d
-else:unix:CONFIG(release, debug|release):   LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC
+CONFIG(debug, debug|release):{
+    LIB_ENEDISTIC_NAME=enedisTIC_d
+}else{
+    LIB_ENEDISTIC_NAME=enedisTIC
+}
+
+LIBS += -L$$DIR_ENEDISTICLIB/out/ -l$$LIB_ENEDISTIC_NAME
+
+#win32:CONFIG(release, debug|release):
+#else:win32:CONFIG(debug, debug|release):    LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC_d
+#else:unix: CONFIG(debug, debug|release):    LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC_d
+#else:unix:CONFIG(release, debug|release):   LIBS += -L$$DIR_ENEDISTICLIB/out/ -lenedisTIC
 
 INCLUDEPATH += $$DIR_ENEDISTICLIB/include
 DEPENDPATH  += $$DIR_ENEDISTICLIB/out
-#POST_TARGETDEPS  += $$DIR_ENEDISTICLIB/out/libenedisTIC_d.a
+PRE_TARGETDEPS  += $$DIR_ENEDISTICLIB/out/libenedisTIC_d.a
 
 
 
@@ -44,6 +52,7 @@ DEPENDPATH  += $$DIR_ENEDISTICLIB/out
 
 
 SOURCES +=  \
+    src/FrameBuffer_tst.cpp \
     src/main.cpp \
 #    src/tst_mytestcase.cpp
 #    src/InfluxMeasurement_tst.cpp \
