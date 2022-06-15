@@ -13,6 +13,7 @@
 #include <QStatusBar>
 
 /* Project includes */
+#include <enedisTIC/FrameBuffer.h>
 #include <enedisTIC/FrameProcessor.h>
 
 #include "ui/MainWindow.h"
@@ -55,7 +56,7 @@
 
 static const QString    C_TESTDATA_FILE
 //    = "../tests/data/samples/tic-standard-1phase-live_30s_raw.dat";
-    = "../tests/data/samples/tic-standard-1phase-live_HC.raw.hex";
+    = "../../../../data/samples/tic-standard-1phase-live_HC.raw.hex";
 //    = "../tests/data/samples/tic-standard-1phase-live_HP.raw.hex";
 //        "../tests/data/samples/tic-historical-3phase-1min.raw.dat"
 //        "../tests/data/samples/tic-standard-singleFrame.dat"
@@ -68,7 +69,7 @@ MainController::MainController(void)
     :   QObject()
     ,   m_datasetsCount( 0U )
     ,   m_framesCount( 0U )
-    ,   m_inputBuffer()
+    ,   p_frameBuffer(std::make_unique<TIC::FrameBuffer>())
     ,   p_frameProcessor(std::make_unique<TIC::FrameProcessor>())
     ,   p_mainWindow(new MainWindow())
     ,   p_outputFile(new QFile(this))
@@ -113,147 +114,6 @@ void
         this,
         SLOT(on_p_serialPort_readyRead())
     );
-}
-
-/* ########################################################################## */
-/* ########################################################################## */
-
-QByteArray
-    MainController::extractFrameFromBuffer(void)
-{
-    const char  c_endOfFrame    = TIC::CHAR_ETX;
-    const char  c_startOfFrame  = TIC::CHAR_STX;
-
-    QByteArray  retval;
-
-
-    TRACE_DBGLOW(
-        "m_inputBuffer='%s'.",
-        this->m_inputBuffer.toStdString().c_str()
-    )
-
-
-    /* begin loop */
-    int     lIdxFirstFrameStart = -1;
-    int     lIdxFrameEnd    = -1;
-    int     lIdxFrameStart  = -1;
-    bool    lFlagContinueProcess    = true;
-    while( lFlagContinueProcess )
-    {
-        TRACE_DBG("New iteration of buffer processing.")
-
-        if( this->m_inputBuffer.isEmpty() == true )
-        {
-            TRACE_DBG("Buffer is empty.")
-
-            lFlagContinueProcess    = false;
-            break;
-        }
-
-
-        /*
-         *  Remove data preceding the first start of frame in the buffer.
-         */
-        lIdxFirstFrameStart = this->m_inputBuffer.indexOf(c_startOfFrame);
-        if( lIdxFirstFrameStart == -1 )
-        {
-            TRACE_DBG(
-                "No start of frame in buffer. Discarding %d chars.",
-                this->m_inputBuffer.length()
-            )
-
-            this->m_inputBuffer.clear();
-
-            lFlagContinueProcess    = false;
-            break;
-        }
-        else if( lIdxFirstFrameStart != 0 )
-        {
-            TRACE_DBG(
-                "First start of frame is after invalid data."
-                " Discarding %d chars.",
-                lIdxFirstFrameStart
-            )
-
-            this->m_inputBuffer.remove( 0, lIdxFirstFrameStart);
-
-            lIdxFirstFrameStart = this->m_inputBuffer.indexOf(c_startOfFrame);
-        }
-        else
-        {
-            /* Nothing to do - Buffer is now expected to start with a SOF */
-        }
-
-
-        /* Look for the first end of frame */
-        lIdxFrameEnd    = this->m_inputBuffer.indexOf(c_endOfFrame, 1);
-
-        /* Look backwards for a start of frame from the end of frame.
-         * If there's no end of frame, it will search from the end of the
-         * buffer. */
-        lIdxFrameStart  = this->m_inputBuffer.lastIndexOf(
-            c_startOfFrame,
-            lIdxFrameEnd -1
-        );
-
-
-        if( lIdxFrameEnd == -1)
-        {
-            TRACE_DBG(
-                "No end of frame in buffer."
-            )
-            lFlagContinueProcess    = false;
-
-
-            if( lIdxFrameStart != lIdxFirstFrameStart )
-            {
-                TRACE_WARN(
-                    "Found multiple start of frame!"
-                    " Discarding %d bytes before the last occurence: '%s'!",
-                    lIdxFrameStart,
-                    this->m_inputBuffer.left(lIdxFrameStart)
-                        .toStdString().c_str()
-                )
-
-                this->m_inputBuffer.remove(0, lIdxFrameStart);
-            }
-
-            continue;
-        }
-
-        if( lIdxFrameStart == -1 )
-        {
-            throw std::logic_error(
-                "Unexpected case: a start of frame should have been found!"
-            );
-        }
-        else if( lIdxFrameStart != 0 )
-        {
-            /* The start of frame corresponding to the end of frame is not at
-             * the beginning of the buffer - it means there's multiple
-             * start of frame before the first end of frame. */
-            TRACE_WARN(
-                "Discarding %d bytes of an incomplete frame: '%s'!",
-                lIdxFrameStart,
-                this->m_inputBuffer.left(lIdxFrameStart).toStdString().c_str()
-            )
-
-            this->m_inputBuffer.remove(0, lIdxFrameStart);
-            continue;
-        }
-        else
-        {
-            /* Extract the frame */
-            retval  = this->m_inputBuffer.left(lIdxFrameEnd + 1);
-            this->m_inputBuffer.remove( 0, lIdxFrameEnd + 1 );
-            lFlagContinueProcess    = false;
-            break;
-        }
-
-    }/* end loop */
-
-
-    return retval;
 }
 
 /* ########################################################################## */
@@ -334,9 +194,9 @@ void
             lReadData.toStdString().c_str()
         )
 
-        /*  Add read data to the buffer then process it */
-        this->m_inputBuffer.append( lReadData );
-        this->processInputBuffer();
+        /* Add read data to the buffer then process it */
+        this->p_frameBuffer->append( lReadData.toStdString() );
+        this->processFrames();
     }
 
     lInputFile.close();
@@ -410,8 +270,8 @@ void
         this->p_outputFile->write(lReadBuffer);
 
         /* Append data to the buffer and try to extract frames */
-        this->m_inputBuffer.append( lReadBuffer );
-        this->processInputBuffer();
+        this->p_frameBuffer->append( lReadBuffer.toStdString() );
+        this->processFrames();
     }
 }
 
@@ -456,52 +316,48 @@ void
 /* ########################################################################## */
 
 void
-    MainController::processInputBuffer(void)
+    MainController::processFrames(void)
 {
-    QByteArray  lFrame;
+    std::string lFrame;
 
-    do
+    while( this->p_frameBuffer->hasFrames() )
     {
-        lFrame  = this->extractFrameFromBuffer();
+        lFrame  = this->p_frameBuffer->popOne();
 
-        if( lFrame.isEmpty() )
+        TRACE_DBG(
+            "Extracted frame with a length of %ld chars.",
+            lFrame.length()
+        )
+
+        /* Update the frames count on the GUI */
+        this->m_framesCount++;
+        this->p_mainWindow->setFramesCount(this->m_framesCount);
+
+
+        /* Try to decode the content of the received frame */
+        try
         {
-            TRACE_DBG("No frame to process.")
+            TIC::TDatasetsPtrList  lDatasetsList
+                = this->p_frameProcessor->decode( lFrame );
+
+            this->m_datasetsCount   += lDatasetsList.size();
+            this->p_mainWindow->setDatasetsCount(this->m_datasetsCount);
+
+            this->p_mainWindow->updateData( lDatasetsList );
         }
-        else
+        catch( const std::runtime_error& e )
         {
-            TRACE_DBG(
-                "Extracted frame with a length of %d chars.",
-                lFrame.length()
+            TRACE_ERR(
+                "A runtime error occured: %s",
+                e.what()
             )
 
-            this->m_framesCount++;
-            this->p_mainWindow->setFramesCount(this->m_framesCount);
-
-            try
-            {
-                TIC::TDatasetsPtrList  lDatasetsList
-                    = this->p_frameProcessor->decode( lFrame.toStdString() );
-
-                this->m_datasetsCount   += lDatasetsList.size();
-                this->p_mainWindow->setDatasetsCount(this->m_datasetsCount);
-
-                this->p_mainWindow->updateData( lDatasetsList );
-            }
-            catch( const std::runtime_error& e )
-            {
-                TRACE_ERR(
-                    "A runtime error occured: %s",
-                    e.what()
-                )
-
-                this->p_mainWindow->statusBar()->showMessage(
-                    e.what(),
-                    10
-                );
-            }
+            this->p_mainWindow->statusBar()->showMessage(
+                e.what(),
+                10
+            );
         }
-    }   while( ! lFrame.isEmpty() );
+    }
 }
 
 /* ########################################################################## */

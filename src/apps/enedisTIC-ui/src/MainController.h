@@ -17,7 +17,8 @@ class   QSerialPort;
 
 class   MainWindow;
 
-namespace TIC {
+namespace   TIC {
+class   FrameBuffer;
 class   FrameProcessor;
 }
 
@@ -50,9 +51,7 @@ private:
     void    inputClose(void);
     bool    inputIsOpen(void) const;
 
-    void    processInputBuffer(void);
-    QByteArray  extractFrameFromBuffer(void);
-//    void    updateUi( const TIC::TDatasetsList& pDatasetsList );
+    void    processFrames(void);
 
 
 
@@ -70,8 +69,8 @@ private:
 
     size_t          m_datasetsCount;
     size_t          m_framesCount;
-    QByteArray      m_inputBuffer;
 
+    std::unique_ptr<TIC::FrameBuffer>       p_frameBuffer;
     std::unique_ptr<TIC::FrameProcessor>    p_frameProcessor;
 
     MainWindow*     p_mainWindow;
