@@ -30,7 +30,6 @@ public:
     Frame(void);
 
 
-    std::string pack(void) const;
     void        unpack(const std::string& pData);
 
     std::list<std::string>  datasets(void) const;
