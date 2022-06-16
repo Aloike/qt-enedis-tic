@@ -1,5 +1,5 @@
 /* Corresponding header inclusion */
-#include "TBSerialConfig.h"
+#include "TBInputConfig.h"
 
 /* System includes */
 #include <QGridLayout>
@@ -17,12 +17,12 @@
 /* ########################################################################## */
 /* ########################################################################## */
 
-TBSerialConfig::TBSerialConfig(QWidget *parent)
+TBInputConfig::TBInputConfig(QWidget *parent)
     :   QToolBar(
-            tr("Serial port configuration"),
+            tr("Input configuration"),
             parent
         )
-    ,   p_cbSerialPortName(new CComboBox(this))
+    ,   p_cbInputName(new CComboBox(this, true))
     ,   p_layoutMain(NULL)
     ,   p_layoutTicMode(NULL)
     ,   p_pbOpenClose(new QPushButton(tr("Open/Close"), this))
@@ -32,6 +32,7 @@ TBSerialConfig::TBSerialConfig(QWidget *parent)
     this->_createLayout();
     this->_createConnections();
 
+    this->p_cbInputName->setMinimumWidth( 250 );
     this->p_rbTicModeHistorical->setChecked(true);
 }
 
@@ -39,20 +40,20 @@ TBSerialConfig::TBSerialConfig(QWidget *parent)
 /* ########################################################################## */
 
 void
-    TBSerialConfig::_createConnections(void)
+    TBInputConfig::_createConnections(void)
 {
     QObject::connect(
-        this->p_cbSerialPortName,
+        this->p_cbInputName,
         SIGNAL(aboutToShowPopup()),
         this,
-        SIGNAL(portsListAboutToShow())
+        SIGNAL(inputsListAboutToShow())
     );
 
     QObject::connect(
         this->p_pbOpenClose,
         SIGNAL(clicked(bool)),
         this,
-        SIGNAL(portOpenCloseTriggered(bool))
+        SIGNAL(inputOpenCloseTriggered(bool))
     );
 }
 
@@ -60,15 +61,15 @@ void
 /* ########################################################################## */
 
 void
-    TBSerialConfig::_createLayout()
+    TBInputConfig::_createLayout()
 {
     this->addWidget(
         new QLabel(
-            tr("Serial port:"),
+            tr("Input:"),
             this )
     );
     this->addWidget(
-        this->p_cbSerialPortName
+        this->p_cbInputName
     );
 
     this->addSeparator();
@@ -93,16 +94,16 @@ void
 /* ########################################################################## */
 
 QString
-    TBSerialConfig::selectedPortName(void) const
+    TBInputConfig::selectedInputPath(void) const
 {
-    return this->p_cbSerialPortName->currentText();
+    return this->p_cbInputName->currentText();
 }
 
 /* ########################################################################## */
 /* ########################################################################## */
 
 TIC::TeTICMode
-    TBSerialConfig::selectedTICMode(void) const
+    TBInputConfig::selectedTICMode(void) const
 {
     TIC::TeTICMode  retval;
 
@@ -126,23 +127,23 @@ TIC::TeTICMode
 /* ########################################################################## */
 
 void
-    TBSerialConfig::setPortsList(const QStringList& pPortNamesList)
+    TBInputConfig::setInputsList(const QStringList& pInputPathsList)
 {
-    this->p_cbSerialPortName->clear();
-    this->p_cbSerialPortName->addItems(pPortNamesList);
+    this->p_cbInputName->clear();
+    this->p_cbInputName->addItems(pInputPathsList);
 }
 
 /* ########################################################################## */
 /* ########################################################################## */
 
 void
-    TBSerialConfig::setPortOpened(const bool pPortConnected)
+    TBInputConfig::setInputOpened(const bool pInputOpened)
 {
-    this->p_cbSerialPortName->setEnabled( ! pPortConnected );
-    this->p_rbTicModeHistorical->setEnabled( ! pPortConnected );
-    this->p_rbTicModeStandard->setEnabled( ! pPortConnected );
+    this->p_cbInputName->setEnabled( ! pInputOpened );
+    this->p_rbTicModeHistorical->setEnabled( ! pInputOpened );
+    this->p_rbTicModeStandard->setEnabled( ! pInputOpened );
 
-    if( pPortConnected )
+    if( pInputOpened )
     {
         this->p_pbOpenClose->setText(tr("Close"));
     }

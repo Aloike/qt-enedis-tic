@@ -6,7 +6,7 @@
 #include <QStatusBar>
 #include <QVBoxLayout>
 
-#include "TBSerialConfig.h"
+#include "TBInputConfig.h"
 #include "WDataViewer.h"
 
 /* ########################################################################## */
@@ -15,9 +15,9 @@
 MainWindow::MainWindow(QWidget *pParent)
     :   QMainWindow(pParent)
     ,   p_dataViewerW(new WDataViewer(this))
+    ,   p_inputConfigTB(new TBInputConfig(this))
     ,   p_labelStatusDatasetsCount(new QLabel(this))
     ,   p_labelStatusFramesCount(new QLabel(this))
-    ,   p_serialConfigTB(new TBSerialConfig(this))
 {
     this->setWindowTitle(QCoreApplication::applicationName());
 
@@ -52,7 +52,7 @@ void
 {
     this->menuBar()->addMenu("testMenu");
 
-    this->addToolBar(this->p_serialConfigTB);
+    this->addToolBar(this->p_inputConfigTB);
     this->statusBar()->addPermanentWidget(
         this->p_labelStatusFramesCount
     );
@@ -64,19 +64,10 @@ void
 /* ########################################################################## */
 /* ########################################################################## */
 
-TBSerialConfig*
-    MainWindow::serialConfigTB(void) const
+TBInputConfig*
+    MainWindow::inputConfigTB(void) const
 {
-    return this->p_serialConfigTB;
-}
-
-/* ########################################################################## */
-/* ########################################################################## */
-
-void
-    MainWindow::updateData(const TIC::TDatasetsPtrList &pDatasetsList)
-{
-    this->p_dataViewerW->updateData(pDatasetsList);
+    return this->p_inputConfigTB;
 }
 
 /* ########################################################################## */
@@ -99,6 +90,24 @@ void
     this->p_labelStatusFramesCount->setText(
         tr("Frames: ") + QString("%1").arg(pCount)
     );
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+void
+    MainWindow::setStatus(const QString &pStatusMsg)
+{
+    this->statusBar()->showMessage( pStatusMsg );
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+void
+    MainWindow::updateData(const TIC::TDatasetsPtrList &pDatasetsList)
+{
+    this->p_dataViewerW->updateData(pDatasetsList);
 }
 
 /* ########################################################################## */

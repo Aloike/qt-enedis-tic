@@ -17,7 +17,7 @@
 #include <enedisTIC/FrameProcessor.h>
 
 #include "ui/MainWindow.h"
-#include "ui/TBSerialConfig.h"
+#include "ui/TBInputConfig.h"
 
 
 /* ########################################################################## */
@@ -54,17 +54,6 @@
 /* ########################################################################## */
 /* ########################################################################## */
 
-static const QString    C_TESTDATA_FILE
-//    = "../tests/data/samples/tic-standard-1phase-live_30s_raw.dat";
-    = "../../../../data/samples/tic-standard-1phase-live_HC.raw.hex";
-//    = "../tests/data/samples/tic-standard-1phase-live_HP.raw.hex";
-//        "../tests/data/samples/tic-historical-3phase-1min.raw.dat"
-//        "../tests/data/samples/tic-standard-singleFrame.dat"
-//        "../tests/data/samples/tic-standard-1phase.raw.dat";
-
-/* ########################################################################## */
-/* ########################################################################## */
-
 MainController::MainController(void)
     :   QObject()
     ,   m_datasetsCount( 0U )
@@ -95,17 +84,17 @@ void
     MainController::_createConnections(void)
 {
     QObject::connect(
-        this->p_mainWindow->serialConfigTB(),
-        SIGNAL(portsListAboutToShow()),
+        this->p_mainWindow->inputConfigTB(),
+        SIGNAL(inputsListAboutToShow()),
         this,
-        SLOT(on_ui_portsList_aboutToShow())
+        SLOT(on_ui_inputsList_aboutToShow())
     );
 
     QObject::connect(
-        this->p_mainWindow->serialConfigTB(),
-        SIGNAL(portOpenCloseTriggered(bool)),
+        this->p_mainWindow->inputConfigTB(),
+        SIGNAL(inputOpenCloseTriggered(bool)),
         this,
-        SLOT(on_ui_portOpenCloseTriggered(bool))
+        SLOT(on_ui_inputOpenCloseTriggered(bool))
     );
 
     QObject::connect(
@@ -119,13 +108,146 @@ void
 /* ########################################################################## */
 /* ########################################################################## */
 
+bool
+    MainController::_openInputFile(
+        const QString &pInputPath
+    )
+{
+    QFile   lInputFile( pInputPath );
+
+    bool    retval  = false;
+
+
+    if( ! lInputFile.open(QFile::ReadOnly) )
+    {
+        QString lErrorMsg   = tr(
+            "Can't open test file: %1"
+        ).arg( pInputPath );
+        this->p_mainWindow->setStatus( lErrorMsg );
+
+        retval  = false;
+    }
+    else
+    {
+        TRACE_DBG(
+            "Opened file: '%s'",
+            lInputFile.fileName().toStdString().c_str()
+        )
+
+        QByteArray lReadData;
+        while( ! lInputFile.atEnd() )
+        {
+            TRACE_DBG("Reading data from file...")
+
+            /* Limit the length of the data read to force using the buffer */
+            lReadData   = lInputFile.read(1000);
+            TRACE_DBGLOW(
+                "Read data:'%s'.",
+                lReadData.toStdString().c_str()
+            )
+
+            /* Add read data to the buffer then process it */
+            this->p_frameBuffer->append( lReadData.toStdString() );
+            this->processFrames();
+        }
+
+        lInputFile.close();
+        retval  = true;
+    }
+
+
+    return retval;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+bool
+    MainController::_openInputSerialPort(
+        const QString &pInputPath,
+        const TIC::TeTICMode &pMode
+    )
+{
+    bool    retval  = false;
+
+
+    try
+    {
+        /* Set port configuration */
+        this->p_serialPort->setPortName(
+            pInputPath
+        );
+
+        this->p_serialPort->setDataBits(QSerialPort::Data7);
+        this->p_serialPort->setParity(QSerialPort::EvenParity);
+        this->p_serialPort->setFlowControl(QSerialPort::NoFlowControl);
+        this->p_serialPort->setStopBits(QSerialPort::OneStop);
+
+        QSerialPort::BaudRate lBaudRate = QSerialPort::Baud1200;
+        switch( pMode )
+        {
+            case    TIC::E_TIC_MODE_HISTORICAL:
+                lBaudRate   = QSerialPort::Baud1200;
+                break;
+
+            case    TIC::E_TIC_MODE_STANDARD:
+                lBaudRate   = QSerialPort::Baud9600;
+                break;
+
+            default:
+                throw std::logic_error("Unknown TIC mode!");
+        }
+        this->p_serialPort->setBaudRate(lBaudRate);
+
+        /* Open the serial interface */
+        if( this->p_serialPort->open(QIODevice::ReadWrite) )
+        {
+            TRACE_DBG(
+                "Connected to '%s'.",
+                this->p_serialPort->portName().toStdString().c_str()
+            )
+
+            this->p_outputFile->setFileName(
+                QApplication::applicationName()
+                + "-receivedData-"
+                + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss")
+                + ".hex"
+            );
+            this->p_outputFile->open(QFile::WriteOnly);
+            retval  = true;
+        }
+        else
+        {
+            throw std::runtime_error(
+                std::string( "Unable to open '")
+                + this->p_serialPort->portName().toStdString()
+                + "': " + this->p_serialPort->errorString().toStdString()
+                + "!"
+            );
+        }
+    }
+    catch( std::exception& myEx )
+    {
+        TRACE_ERR(
+            "An exception occured while opening serial port: %s",
+            myEx.what()
+        );
+    }
+
+
+    return retval;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
 void
 MainController::initialize(void)
 {
     /* Show the UI */
     this->p_mainWindow->show();
 
-    this->p_mainWindow->serialConfigTB()->setPortOpened(false);
+    this->p_mainWindow->inputConfigTB()->setInputOpened(false);
 //    this->updateSerialPortsList();
 }
 
@@ -135,13 +257,21 @@ MainController::initialize(void)
 void
     MainController::inputClose()
 {
-    TRACE_DBG(
-        "Closing '%s'.",
-        this->p_serialPort->portName().toStdString().c_str()
-    )
+    if( this->p_serialPort->isOpen() )
+    {
+        this->p_serialPort->close();
 
-    this->p_serialPort->close();
-    this->p_outputFile->close();
+        this->p_mainWindow->setStatus(
+            tr("Closed serial port \"%1\".")
+            .arg( this->p_serialPort->portName() )
+        );
+    }
+
+    /* Also close the output file if it is open */
+    if( this->p_outputFile->isOpen() )
+    {
+        this->p_outputFile->close();
+    }
 }
 
 /* ########################################################################## */
@@ -165,93 +295,40 @@ void
         const QString&          pInputPath,
         const TIC::TeTICMode&   pMode )
 {
-#ifdef  TEST_DATA_FROM_FILE
-    Q_UNUSED(pInputPath)
-    Q_UNUSED(pMode)
-
-    QFile   lInputFile( C_TESTDATA_FILE );
-
-    if( ! lInputFile.open(QFile::ReadOnly) )
+    if( this->_openInputSerialPort( pInputPath, pMode ) == true )
     {
-        throw std::runtime_error(
-            "Can't open test file: " + lInputFile.errorString().toStdString()
+        TRACE_INFO(
+            "Opened '%s' as a serial port.",
+            pInputPath.toStdString().c_str()
+        );
+        this->p_mainWindow->setStatus(
+            tr("Opened serial port \"%1\".")
+            .arg( pInputPath )
         );
     }
-    TRACE_DBG(
-        "Opened file: '%s'",
-        lInputFile.fileName().toStdString().c_str()
-    )
-
-    QByteArray lReadData;
-    while( ! lInputFile.atEnd() )
+    else if( this->_openInputFile( pInputPath ) )
     {
-        TRACE_DBG("Reading data from file...")
-
-        /* Limit the length of the data read to force using the buffer */
-        lReadData   = lInputFile.read(1000);
-        TRACE_DBGLOW(
-            "Read data:'%s'.",
-            lReadData.toStdString().c_str()
-        )
-
-        /* Add read data to the buffer then process it */
-        this->p_frameBuffer->append( lReadData.toStdString() );
-        this->processFrames();
-    }
-
-    lInputFile.close();
-#else
-    /* Set port configuration */
-    this->p_serialPort->setPortName(
-        pInputPath
-    );
-
-    this->p_serialPort->setDataBits(QSerialPort::Data7);
-    this->p_serialPort->setParity(QSerialPort::EvenParity);
-    this->p_serialPort->setFlowControl(QSerialPort::NoFlowControl);
-    this->p_serialPort->setStopBits(QSerialPort::OneStop);
-
-    QSerialPort::BaudRate lBaudRate = QSerialPort::Baud1200;
-    switch( pMode )
-    {
-        case    TIC::E_TIC_MODE_HISTORICAL:
-            lBaudRate   = QSerialPort::Baud1200;
-            break;
-
-        case    TIC::E_TIC_MODE_STANDARD:
-            lBaudRate   = QSerialPort::Baud9600;
-            break;
-
-        default:
-            throw std::logic_error("Unknown TIC mode!");
-    }
-    this->p_serialPort->setBaudRate(lBaudRate);
-
-    /* Open the serial interface */
-    if( this->p_serialPort->open(QIODevice::ReadWrite) )
-    {
-        TRACE_DBG(
-            "Connected to '%s'.",
-            this->p_serialPort->portName().toStdString().c_str()
-        )
-
-        this->p_outputFile->setFileName(
-            QApplication::applicationName()
-            + "-receivedData-"
-            + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss")
-            + ".hex"
+        TRACE_INFO(
+            "Opened '%s' as a regular file.",
+            pInputPath.toStdString().c_str()
         );
-        this->p_outputFile->open(QFile::WriteOnly);
+
+        this->p_mainWindow->setStatus(
+            tr("Read file \"%1\".")
+            .arg( pInputPath )
+        );
     }
     else
     {
-        TRACE_ERR(
-            "Unable to open '%s': %s!",
-            this->p_serialPort->portName().toStdString().c_str(),
-            this->p_serialPort->errorString().toStdString().c_str()
-        )
+        QString lErrorMsg   = tr(
+            "Unable to open '%1'!"
+        ).arg( pInputPath );
+
+        TRACE_ERR( "%s", lErrorMsg.toStdString().c_str() );
+        this->p_mainWindow->setStatus(
+            lErrorMsg
+        );
     }
-#endif
 }
 
 /* ########################################################################## */
@@ -279,7 +356,7 @@ void
 /* ########################################################################## */
 
 void
-    MainController::on_ui_portOpenCloseTriggered(bool)
+    MainController::on_ui_inputOpenCloseTriggered(bool)
 {
     TRACE_DBG("Button 'OpenClose' clicked.")
 
@@ -292,13 +369,13 @@ void
     else
     {
         this->inputOpen(
-            this->p_mainWindow->serialConfigTB()->selectedPortName(),
-            this->p_mainWindow->serialConfigTB()->selectedTICMode()
+            this->p_mainWindow->inputConfigTB()->selectedInputPath(),
+            this->p_mainWindow->inputConfigTB()->selectedTICMode()
         );
     }
 
     this->p_mainWindow->centralWidget()->setEnabled(true);
-    this->p_mainWindow->serialConfigTB()->setPortOpened(
+    this->p_mainWindow->inputConfigTB()->setInputOpened(
         this->inputIsOpen()
     );
 }
@@ -307,7 +384,7 @@ void
 /* ########################################################################## */
 
 void
-    MainController::on_ui_portsList_aboutToShow()
+    MainController::on_ui_inputsList_aboutToShow()
 {
     this->updateSerialPortsList();
 }
@@ -352,9 +429,8 @@ void
                 e.what()
             )
 
-            this->p_mainWindow->statusBar()->showMessage(
-                e.what(),
-                10
+            this->p_mainWindow->setStatus(
+                e.what()
             );
         }
     }
@@ -379,7 +455,7 @@ MainController::updateSerialPortsList(void)
     }
 
 
-    this->p_mainWindow->serialConfigTB()->setPortsList(lPortsList);
+    this->p_mainWindow->inputConfigTB()->setInputsList(lPortsList);
 }
 
 /* ########################################################################## */

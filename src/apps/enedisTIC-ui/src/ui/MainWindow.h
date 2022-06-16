@@ -8,7 +8,7 @@ class   QVBoxLayout;
 
 #include <enedisTIC/utils.h>
 
-class   TBSerialConfig;
+class   TBInputConfig;
 class   WDataViewer;
 
 /* ########################################################################## */
@@ -25,8 +25,9 @@ public:
     ~MainWindow();
 
 
-    TBSerialConfig* serialConfigTB(void) const;
+    TBInputConfig*  inputConfigTB(void) const;
 
+    void    setStatus(const QString& pStatusMsg);
     void    updateData(const TIC::TDatasetsPtrList& pDatasetsList);
 
     void    setFramesCount(const size_t& pCount);
@@ -44,9 +45,9 @@ private:
 private:
 
     WDataViewer*    p_dataViewerW;
+    TBInputConfig*  p_inputConfigTB;
     QLabel*         p_labelStatusDatasetsCount;
     QLabel*         p_labelStatusFramesCount;
-    TBSerialConfig* p_serialConfigTB;
 
 };
 

@@ -1,5 +1,5 @@
-#ifndef TBSERIALCONFIG_H
-#define TBSERIALCONFIG_H
+#ifndef TBINPUTCONFIG_H
+#define TBINPUTCONFIG_H
 
 #include <QToolBar>
 
@@ -13,29 +13,29 @@ class   QRadioButton;
 class   CComboBox;
 
 
-class   TBSerialConfig
+class   TBInputConfig
         :   public  QToolBar
 {
     Q_OBJECT
 
 public:
 
-    explicit TBSerialConfig(QWidget *parent = nullptr);
+    explicit TBInputConfig(QWidget *parent = nullptr);
 //    ~TBSerialConfig();
 
 
-    void    setPortsList(const QStringList &pPortNamesList);
-    void    setPortOpened(const bool pPortConnected);
+    void    setInputsList(const QStringList &pPortNamesList);
+    void    setInputOpened(const bool pPortConnected);
 
-    QString         selectedPortName(void) const;
+    QString         selectedInputPath(void) const;
     TIC::TeTICMode  selectedTICMode(void) const;
 
 
 
 signals:
 
-    void    portsListAboutToShow(void);
-    void    portOpenCloseTriggered(bool);
+    void    inputsListAboutToShow(void);
+    void    inputOpenCloseTriggered(bool);
 
 
 
@@ -47,7 +47,7 @@ private:
 
 private:
 
-    CComboBox*      p_cbSerialPortName;
+    CComboBox*      p_cbInputName;
     QHBoxLayout*    p_layoutMain;
     QHBoxLayout*    p_layoutTicMode;
     QPushButton*    p_pbOpenClose;

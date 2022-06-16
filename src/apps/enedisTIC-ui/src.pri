@@ -14,7 +14,7 @@ HEADERS	+= src/ui/dataDisplay/GBPuissanceApparente.h
 HEADERS	+= src/ui/dataDisplay/GBTarification.h
 HEADERS	+= src/ui/GBInput.h
 HEADERS	+= src/ui/MainWindow.h
-HEADERS	+= src/ui/TBSerialConfig.h
+HEADERS	+= src/ui/TBInputConfig.h
 HEADERS	+= src/ui/ui_utils.h
 HEADERS	+= src/ui/WDataViewer.h
 
@@ -28,6 +28,6 @@ SOURCES	+= src/ui/dataDisplay/GBPuissanceApparente.cpp
 SOURCES	+= src/ui/dataDisplay/GBTarification.cpp
 SOURCES	+= src/ui/GBInput.cpp
 SOURCES	+= src/ui/MainWindow.cpp
-SOURCES	+= src/ui/TBSerialConfig.cpp
+SOURCES	+= src/ui/TBInputConfig.cpp
 SOURCES	+= src/ui/ui_utils.cpp
 SOURCES	+= src/ui/WDataViewer.cpp

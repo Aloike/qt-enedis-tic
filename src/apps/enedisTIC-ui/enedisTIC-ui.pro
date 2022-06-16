@@ -4,8 +4,6 @@ TARGET      = enedisTIC-ui
 include( $$PWD/../../../config_build.pri )
 include( $$PWD/../../../version_git.pri )
 
-#DEFINES	+= TEST_DATA_FROM_FILE
-
 # ##############################################################################
 ## Declaration of Qt modules used in the project
 # ##############################################################################

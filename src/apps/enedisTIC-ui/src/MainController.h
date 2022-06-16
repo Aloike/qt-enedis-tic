@@ -50,16 +50,21 @@ private:
     void    inputOpen(const QString& pInputPath, const TIC::TeTICMode& pMode);
     void    inputClose(void);
     bool    inputIsOpen(void) const;
+    bool    _openInputFile( const QString& pInputPath );
+    bool    _openInputSerialPort(
+                    const QString& pInputPath,
+                    const TIC::TeTICMode& pMode );
 
     void    processFrames(void);
+
 
 
 
 private slots:
 
     void    on_p_serialPort_readyRead(void);
-    void    on_ui_portsList_aboutToShow(void);
-    void    on_ui_portOpenCloseTriggered(bool);
+    void    on_ui_inputsList_aboutToShow(void);
+    void    on_ui_inputOpenCloseTriggered(bool);
 
 
 
