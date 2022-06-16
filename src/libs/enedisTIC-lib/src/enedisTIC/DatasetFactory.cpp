@@ -105,12 +105,6 @@ DatasetFactory::createDataset(
 ) const
 {
     std::string lLabel  = Datasets::AbstractDataset::extractLabel(pDatasetStr);
-#ifdef  TRACE_DEBUG
-    std::cout
-            <<  __FILE__ << " +" << __LINE__ << " \t"
-            <<  "lLabel: " << lLabel
-            <<  std::endl;
-#endif
 
 
     /*

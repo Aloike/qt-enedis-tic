@@ -65,15 +65,11 @@ void
     while(  (lPosDatasetStart = pData.find(TIC::CHAR_LF, lPosDatasetSearchFrom))
             !=  std::string::npos )
     {
-//        std::cout << "----------" << std::endl;
-//        std::cout << "lPosDatasetStart:" << lPosDatasetStart << std::endl << std::flush;
-
         /* Find the end of the dataset */
         lPosDatasetEnd  = pData.find(
             TIC::CHAR_CR,
             lPosDatasetStart+1
         );
-//        std::cout << "lPosDatasetEnd:" << lPosDatasetEnd << std::endl << std::flush;
 
         if( lPosDatasetEnd == std::string::npos )
         {
@@ -87,17 +83,13 @@ void
             lPosDatasetEnd - lPosDatasetStart
         );
 
-//        std::cout << "Dataset str:" << lDatasetStr << std::endl << std::flush;
         this->m_datasets.push_back( lDatasetStr );
 
 
-//        throw std::logic_error("Unimplemented method!");
-//        #warning TODO: Use a factory to create datasets based on their type?
+// TODO: Use a factory to create datasets based on their type?
 
         lPosDatasetSearchFrom   = lPosDatasetEnd + 1;
-//        std::cout << "----------" << std::endl;
     }
-//    std::cout << s << std::endl;
 }
 
 /* ########################################################################## */
