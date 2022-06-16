@@ -1,0 +1,33 @@
+FORMS	+= src/ui/dataDisplay/GBCourantTension.ui
+FORMS	+= src/ui/dataDisplay/GBEnergieActive.ui
+FORMS	+= src/ui/dataDisplay/GBInfosCompteur.ui
+FORMS	+= src/ui/dataDisplay/GBPuissanceApparente.ui
+FORMS	+= src/ui/dataDisplay/GBTarification.ui
+
+HEADERS	+= src/core/trace.h
+HEADERS	+= src/MainController.h
+HEADERS	+= src/ui/common/CComboBox.h
+HEADERS	+= src/ui/dataDisplay/GBCourantTension.h
+HEADERS	+= src/ui/dataDisplay/GBEnergieActive.h
+HEADERS	+= src/ui/dataDisplay/GBInfosCompteur.h
+HEADERS	+= src/ui/dataDisplay/GBPuissanceApparente.h
+HEADERS	+= src/ui/dataDisplay/GBTarification.h
+HEADERS	+= src/ui/GBInput.h
+HEADERS	+= src/ui/MainWindow.h
+HEADERS	+= src/ui/TBInputConfig.h
+HEADERS	+= src/ui/ui_utils.h
+HEADERS	+= src/ui/WDataViewer.h
+
+SOURCES	+= src/MainController.cpp
+SOURCES	+= src/main.cpp
+SOURCES	+= src/ui/common/CComboBox.cpp
+SOURCES	+= src/ui/dataDisplay/GBCourantTension.cpp
+SOURCES	+= src/ui/dataDisplay/GBEnergieActive.cpp
+SOURCES	+= src/ui/dataDisplay/GBInfosCompteur.cpp
+SOURCES	+= src/ui/dataDisplay/GBPuissanceApparente.cpp
+SOURCES	+= src/ui/dataDisplay/GBTarification.cpp
+SOURCES	+= src/ui/GBInput.cpp
+SOURCES	+= src/ui/MainWindow.cpp
+SOURCES	+= src/ui/TBInputConfig.cpp
+SOURCES	+= src/ui/ui_utils.cpp
+SOURCES	+= src/ui/WDataViewer.cpp
