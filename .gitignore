@@ -1,5 +1,6 @@
 *.user
 .qmake.stash
+.qtc_clangd/
 Makefile
 build/
 out/
