@@ -1,0 +1,3 @@
+[submodule "src-ext/influxdb-cxx"]
+	path = src-ext/influxdb-cxx
+	url = https://github.com/offa/influxdb-cxx
