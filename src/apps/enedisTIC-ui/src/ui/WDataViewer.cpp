@@ -163,7 +163,7 @@ void
         else if(lDatasetPtr->label() == TIC::Datasets::DATE::LABEL )
         {
             this->p_infosCompteurGB->setDATE(
-                QString::fromStdString(lDatasetPtr->timestamp())
+                QString::fromStdString(lDatasetPtr->timestampStr())
             );
             continue;
         }

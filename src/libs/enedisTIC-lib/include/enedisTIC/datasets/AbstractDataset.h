@@ -48,7 +48,9 @@ public:
 
 
     /* Varying data */
-    std::string timestamp(void) const;
+    struct tm   timestamp(void) const;
+    time_t      timestampEpoch_s(void) const;
+    std::string timestampStr(void) const;
     void        setTimestamp(const std::string& pTimestampStr);
 
     std::string data(void) const;
@@ -116,7 +118,7 @@ protected:
     const std::string   m_label;
     const std::string   m_unit;
 
-    std::string m_timestamp;
+    struct tm   m_timestamp;
 
 
 

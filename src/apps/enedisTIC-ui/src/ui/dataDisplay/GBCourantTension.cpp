@@ -118,18 +118,18 @@ void    GBCourantTension::setLabel3(
     {
         /* Nothing to do */
     }
-    else if( pDataset->timestamp().length() != 13 )
+    else if( pDataset->timestampStr().length() != 13 )
     {
         TRACE_ERR(
             "Invalid timestamp length of %ld! ('%s')",
-            pDataset->timestamp().length(),
-            pDataset->timestamp().c_str()
+            pDataset->timestampStr().length(),
+            pDataset->timestampStr().c_str()
         );
     }
     else
     {
         QString lTimestampInputStr
-            = QString::fromStdString(pDataset->timestamp());
+            = QString::fromStdString(pDataset->timestampStr());
         QString lTimestampOutputStr = "@ ";
 
 

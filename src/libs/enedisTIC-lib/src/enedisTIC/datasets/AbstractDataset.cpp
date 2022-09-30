@@ -3,7 +3,12 @@
 
 /* System includes */
 #include <algorithm>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 #include <stdexcept>
+#include <string.h>
+#include <time.h>
 
 /* Libraries includes */
 
@@ -36,6 +41,9 @@ AbstractDataset::AbstractDataset(
     ,   m_unit( pUnit )
     ,   m_timestamp()
 {
+    memset( &this->m_timestamp, '\0', sizeof(struct tm) );
+
+
     /* Check the given label is valid */
     if(     pLabel.empty()
         ||  pLabel.length() > 8 )
@@ -190,7 +198,7 @@ AbstractDataset::pack(const TeTICMode pTICMode) const
     if( this->hasTimestamp() == true )
     {
         lPayload  += c_spacingChar;
-        lPayload  += this->timestamp();
+        lPayload  += this->timestampStr();
     }
     lPayload  += c_spacingChar;
     lPayload  += this->data();
@@ -223,12 +231,25 @@ void
         );
     }
 
+    int lUtcOffset  = 0;
+    int lTmDST      = -1;
+    std::string lUtcOffsetStr   = "";
     switch( pTimestampStr[0] )
     {
         case 'E':
         case 'e':
+            /* Summer time */
+            lUtcOffset  = +2;
+            lUtcOffsetStr   = "+0200";
+            lTmDST  = 1;
+            break;
+
         case 'H':
         case 'h':
+            /* Winter time */
+            lUtcOffset      = +1;
+            lUtcOffsetStr   = "+0100";
+            lTmDST  = 0;
             break;
 
         default:
@@ -238,17 +259,107 @@ void
             break;
     }
 
+    tm  lTime;
 
-    this->m_timestamp   = pTimestampStr;
+    /* Date */
+    lTime.tm_year   = stoi(pTimestampStr.substr( 1, 2 )) + 100;
+    lTime.tm_mon    = stoi(pTimestampStr.substr( 3, 2 )) - 1;
+    lTime.tm_mday   = stoi(pTimestampStr.substr( 5, 2 ));
+
+    /* Time */
+    lTime.tm_hour   = stoi(pTimestampStr.substr( 7, 2 ));// + lUtcOffset;
+    lTime.tm_isdst  = lTmDST;
+    lTime.tm_gmtoff = lUtcOffset * 60 * 60;
+    while( lTime.tm_hour < 0 )
+    {
+        lTime.tm_hour   += 24;
+    }
+    while( lTime.tm_hour >= 24 )
+    {
+        lTime.tm_hour   -= 24;
+    }
+
+    lTime.tm_min    = stoi(pTimestampStr.substr( 9, 2 ));
+    while( lTime.tm_min < 0 )
+    {
+        lTime.tm_min   += 60;
+    }
+    while( lTime.tm_min >= 60 )
+    {
+        lTime.tm_min   -= 60;
+    }
+
+    lTime.tm_sec    = stoi(pTimestampStr.substr( 11, 2 ));
+    while( lTime.tm_sec < 0 )
+    {
+        lTime.tm_sec   += 60;
+    }
+    while( lTime.tm_sec >= 60 )
+    {
+        lTime.tm_sec   -= 60;
+    }
+
+
+    this->m_timestamp   = lTime;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+struct tm
+    AbstractDataset::timestamp() const
+{
+    return this->m_timestamp;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+time_t
+    AbstractDataset::timestampEpoch_s() const
+{
+    struct tm   lTime   = this->m_timestamp;
+    time_t      lTimeSinceEpoch = mktime( &lTime );
+
+    return lTimeSinceEpoch;
 }
 
 /* ########################################################################## */
 /* ########################################################################## */
 
 std::string
-    AbstractDataset::timestamp() const
+    AbstractDataset::timestampStr() const
 {
-    return this->m_timestamp;
+    std::string     retval;
+
+    struct tm       tm_zero;
+    memset( &tm_zero, '\0', sizeof(struct tm) );
+
+    /* Check whether the time structure is empty or not */
+    int lCmpRet = memcmp( &this->m_timestamp, &tm_zero, sizeof(struct tm) );
+    if( lCmpRet != 0 )
+    {
+        char    lBuffer[C_TIMESTAMP_LENGTH + 1] = {0};
+
+        snprintf(
+            lBuffer,
+            C_TIMESTAMP_LENGTH+1,
+            "%c%02d%02d%02d"
+            "%02d%02d%02d"
+            ,
+            this->m_timestamp.tm_isdst == 0 ? 'H':'E',
+            this->m_timestamp.tm_year - 100,
+            this->m_timestamp.tm_mon + 1,
+            this->m_timestamp.tm_mday,
+            this->m_timestamp.tm_hour,
+            this->m_timestamp.tm_min,
+            this->m_timestamp.tm_sec
+        );
+
+        retval.append( lBuffer );
+    }
+
+    return retval;//this->m_timestamp;
 }
 
 /* ########################################################################## */
@@ -268,7 +379,7 @@ std::string
     if( this->hasTimestamp() )
     {
         retval  +=  ", ";
-        retval  +=  "'timestamp': '" + this->timestamp() + "'";
+        retval  +=  "'timestamp': '" + this->timestampStr() + "'";
     }
 
 //    retval  +=  ", ";
