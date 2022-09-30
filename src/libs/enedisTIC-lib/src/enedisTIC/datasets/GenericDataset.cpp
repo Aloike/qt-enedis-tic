@@ -19,11 +19,13 @@ GenericDataset::GenericDataset(
     const std::string&  pLabel,
     const bool          pHasTimestamp,
     const size_t&       pDataLength,
+    const TeDataType    pDataType,
     const std::string&  pUnit )
     :   AbstractDataset(
             pLabel,
             pHasTimestamp,
             pDataLength,
+            pDataType,
             pUnit )
     ,   m_data()
 {

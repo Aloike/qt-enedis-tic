@@ -27,6 +27,7 @@ DATE::DATE()
             LABEL,
             true,
             DATA_LENGTH,
+            E_DATA_NONE,
             UNIT )
 {
 }

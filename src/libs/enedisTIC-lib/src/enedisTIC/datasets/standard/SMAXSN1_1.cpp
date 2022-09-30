@@ -26,7 +26,9 @@ SMAXSN1_1::SMAXSN1_1()
     :   GenericDataset(
             LABEL,
             true,
-            DATA_LENGTH )
+            DATA_LENGTH,
+            E_DATA_INTEGER,
+            UNIT )
 {
 }
 

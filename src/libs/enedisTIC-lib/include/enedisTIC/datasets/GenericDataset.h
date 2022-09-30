@@ -28,6 +28,7 @@ public:
             const std::string&  pLabel,
             const bool          pHasTimestamp,
             const size_t&       pDataLength,
+            const TeDataType    pDataType,
             const std::string&  pUnit=std::string() );
 
 

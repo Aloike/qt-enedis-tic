@@ -27,6 +27,7 @@ PCOUP::PCOUP()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }

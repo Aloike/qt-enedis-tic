@@ -27,6 +27,7 @@ CCASN::CCASN()
             LABEL,
             true,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }

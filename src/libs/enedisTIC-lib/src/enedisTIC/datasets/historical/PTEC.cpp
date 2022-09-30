@@ -27,6 +27,7 @@ PTEC::PTEC()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_TEXT,
             UNIT )
 {
 }

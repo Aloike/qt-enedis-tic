@@ -25,7 +25,8 @@ VTIC::VTIC()
     :   GenericDataset(
             LABEL,
             false,
-            DATA_LENGTH )
+            DATA_LENGTH,
+            E_DATA_INTEGER )
 {
 }
 

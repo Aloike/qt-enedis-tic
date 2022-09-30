@@ -27,8 +27,10 @@ AbstractDataset::AbstractDataset(
     const std::string&  pLabel,
     const bool          pHasTimestamp,
     const size_t&       pDataLength,
+    const TeDataType    pDataType,
     const std::string&  pUnit   )
     :   m_dataLength(pDataLength)
+    ,   m_dataType(pDataType)
     ,   m_hasTimestamp(pHasTimestamp)
     ,   m_label(pLabel)
     ,   m_unit( pUnit )
@@ -91,6 +93,15 @@ size_t
     AbstractDataset::dataLength() const
 {
     return this->m_dataLength;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+AbstractDataset::TeDataType
+    AbstractDataset::dataType() const
+{
+    return this->m_dataType;
 }
 
 /* ########################################################################## */

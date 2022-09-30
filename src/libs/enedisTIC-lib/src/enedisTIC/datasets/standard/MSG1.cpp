@@ -27,6 +27,7 @@ MSG1::MSG1()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_TEXT,
             UNIT )
 {
 }

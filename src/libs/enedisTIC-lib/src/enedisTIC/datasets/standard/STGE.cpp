@@ -27,6 +27,7 @@ STGE::STGE()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }

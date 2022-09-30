@@ -27,6 +27,7 @@ EASF02::EASF02()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }

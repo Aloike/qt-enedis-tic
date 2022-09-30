@@ -27,6 +27,7 @@ NJOURF_1::NJOURF_1()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }

@@ -27,6 +27,7 @@ SINSTS2::SINSTS2()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }

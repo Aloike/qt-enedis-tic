@@ -23,12 +23,20 @@ class   LIBENEDISTIC_EXPORT AbstractDataset
 {
 public:
 
+    typedef enum    EDataType
+    {
+        E_DATA_TEXT,
+        E_DATA_INTEGER,
+        E_DATA_NONE
+    }   TeDataType;
+
     static std::string  extractLabel(const std::string&  pDatasetStr);
 
     /* Fixed data */
     std::string label(void) const;
     bool        hasTimestamp(void) const;
     size_t      dataLength(void) const;
+    TeDataType  dataType(void) const;
     std::string unit(void) const;
 
 
@@ -56,6 +64,7 @@ protected:
         const std::string&  pLabel,
         const bool          pHasTimestamp,
         const size_t&       pDataLength,
+        const TeDataType    pDataType,
         const std::string&  pUnit=std::string() );
 
 
@@ -102,6 +111,7 @@ protected:
     static const size_t C_TIMESTAMP_LENGTH;
 
     const size_t        m_dataLength;
+    const TeDataType    m_dataType;
     const bool          m_hasTimestamp;
     const std::string   m_label;
     const std::string   m_unit;

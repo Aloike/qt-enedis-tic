@@ -27,6 +27,7 @@ IINST3::IINST3()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }

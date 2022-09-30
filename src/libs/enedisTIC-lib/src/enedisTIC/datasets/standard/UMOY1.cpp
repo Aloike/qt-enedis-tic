@@ -27,6 +27,7 @@ UMOY1::UMOY1()
             LABEL,
             true,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }

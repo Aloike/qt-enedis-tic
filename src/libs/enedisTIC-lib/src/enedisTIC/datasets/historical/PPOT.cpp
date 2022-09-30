@@ -27,6 +27,7 @@ PPOT::PPOT()
             LABEL,
             false,
             DATA_LENGTH,
+            E_DATA_INTEGER,
             UNIT )
 {
 }
