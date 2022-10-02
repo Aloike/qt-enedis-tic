@@ -25,7 +25,12 @@ class   CWrapperTicInflux
 {
 public:
 
-    CWrapperTicInflux(const std::string& pInInfluxMeasurementName);
+    CWrapperTicInflux(
+        const std::string& pInInfluxHost,
+        const int          pInInfluxPort,
+        const std::string& pInInfluxDatabaseName,
+        const std::string& pInInfluxMeasurementName
+    );
 
 
     void    appendRawData(const std::string& pInData);
@@ -36,6 +41,7 @@ protected:
 private:
 
     CWrapperTicInflux(const CWrapperTicInflux&) = delete;
+    CWrapperTicInflux&  operator=(const CWrapperTicInflux&) = delete;
 
     void    frameToInfluxdbPoints(
                 const TIC::TDatasetsPtrList& pDatasetsPtrList );

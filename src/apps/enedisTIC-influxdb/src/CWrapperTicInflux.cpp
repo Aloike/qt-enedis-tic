@@ -15,9 +15,21 @@
 /* ########################################################################## */
 
 CWrapperTicInflux::CWrapperTicInflux(
-    const std::string& pInInfluxMeasurementName)
+        const std::string& pInInfluxHost,
+        const int          pInInfluxPort,
+        const std::string& pInInfluxDatabaseName,
+        const std::string& pInInfluxMeasurementName
+    )
     :   m_influxMeasurementName( pInInfluxMeasurementName )
-    ,   m_influxdb( influxdb::InfluxDBFactory::Get("http://localhost:8186?db=enedisTIC-test") )
+    ,   m_influxdb(
+            influxdb::InfluxDBFactory::Get(
+                QString("http://%1:%2?db=%3")
+                .arg( QString::fromStdString( pInInfluxHost ) )
+                .arg( pInInfluxPort )
+                .arg( QString::fromStdString( pInInfluxDatabaseName ) )
+                .toStdString()
+            )
+        )
 {
 
 }
