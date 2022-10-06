@@ -94,7 +94,8 @@ void
 
     for( const TIC::TDatasetPtr& lDatasetPtr : pDatasetsPtrList )
     {
-        if(     lDatasetPtr->label() == TIC::Datasets::ADSC::LABEL
+        if(     lDatasetPtr->label() == TIC::Datasets::ADCO::LABEL
+            ||  lDatasetPtr->label() == TIC::Datasets::ADSC::LABEL
             ||  lDatasetPtr->label() == TIC::Datasets::PRM::LABEL
             ||  lDatasetPtr->label() == TIC::Datasets::VTIC::LABEL )
         {
@@ -105,6 +106,12 @@ void
         {
             /* Contains the current date & time*/
             lTimestampEpoch_s   = lDatasetPtr->timestampEpoch_s();
+
+            TRACE_DBG(
+                "Received dataset 'DATE' with value '%s'/%ld.",
+                lDatasetPtr->timestampStr().c_str(),
+                lTimestampEpoch_s
+            );
         }
         else if( lDatasetPtr->hasTimestamp() )
         {
@@ -121,6 +128,9 @@ void
     /* ---------------------------------------------------------------------- */
     /* ---------------------------------------------------------------------- */
 
+    /*
+     *  Create a "base" datapoint. It contains all common tags.
+     */
     influxdb::Point lPointBase{this->m_influxMeasurementName};
     for( const TIC::TDatasetPtr& lDatasetPtr : lTags )
     {
@@ -131,6 +141,9 @@ void
     }
 
 
+    /*
+     *  Default data point. Contains all non-timestamped values.
+     */
     influxdb::Point lPointDefault   = lPointBase;
     for( const TIC::TDatasetPtr& lDatasetPtr : lValues )
     {
@@ -138,7 +151,8 @@ void
         {
             case    TIC::Datasets::AbstractDataset::E_DATA_INTEGER:
             {
-                int lValue  = std::stoi( lDatasetPtr->data() );
+                std::string lData   = lDatasetPtr->data();
+                long long lValue = std::stoll( lData );
                 lPointDefault.addField(
                     lDatasetPtr->label(),
                     lValue
@@ -157,7 +171,9 @@ void
     }
     if( lTimestampEpoch_s != 0 )
     {
-        lPointBase.setTimestamp(
+        /* If we found a DATE dataset, then use it as the timestamp of the
+         * default data point. */
+        lPointDefault.setTimestamp(
             std::chrono::system_clock::from_time_t(
                 lTimestampEpoch_s
             )
@@ -168,6 +184,9 @@ void
     );
 
 
+    /*
+     *  Write all timestamped data points.
+     */
     for( const TIC::TDatasetPtr& lDatasetPtr : lValuesWithTimestamp )
     {
         influxdb::Point lPointTimestamped   = lPointBase;
