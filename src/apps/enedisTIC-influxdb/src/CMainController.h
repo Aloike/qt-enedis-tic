@@ -8,12 +8,13 @@
 #include <memory>
 
 /* Libraries includes */
+#include <QSerialPort>
 
 /* Project includes */
 #include "CSettings.h"
 #include "CWrapperTicInflux.h"
 
-#define D_CMainController_READ_FROM_FILE
+//#define D_CMainController_READ_FROM_FILE
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -32,24 +33,36 @@ public:
 protected:
 private:
 
+    CMainController(const CMainController&)                 = delete;
+    CMainController&    operator=(const CMainController&)   = delete;
+
+    void    _createConnections(void);
+
 #ifdef  D_CMainController_READ_FROM_FILE
     void    readFromFile(void);
 #endif
 
+    bool    serialPort_init(void);
+
+
+public slots:
+private slots:
+
+    void    on_m_serialPort_readyRead(void);
+
+
+signals:
 
 
 public:
 protected:
 private:
 
+    QSerialPort         m_serialPort;
     CSettings           m_settings;
     std::unique_ptr<CWrapperTicInflux>  p_wrapperTicInflux;
 
 
-
-signals:
-
-public slots:
 };
 
 /* ########################################################################## */

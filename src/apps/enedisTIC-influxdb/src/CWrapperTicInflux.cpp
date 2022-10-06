@@ -4,11 +4,12 @@
 /* System includes */
 
 /* Libraries includes */
-#include <qdebug.h>
 
 /* Project includes */
 #include <enedisTIC/datasets.h>
 #include <enedisTIC/datasets/AbstractDataset.h>
+
+#include "trace.h"
 
 
 /* ########################################################################## */
@@ -46,7 +47,7 @@ void
     {
         std::string lFrame  = this->m_ticFrameBuffer.popOne();
 
-        qDebug(
+        TRACE_DBG(
             "Extracted frame with a length of %ld chars.",
             lFrame.length()
         );
@@ -64,7 +65,7 @@ void
         }
         catch( const std::runtime_error& e )
         {
-            qWarning(
+            TRACE_WARN(
                 "A runtime error occured: %s",
                 e.what()
             );

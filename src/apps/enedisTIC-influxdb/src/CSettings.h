@@ -9,7 +9,7 @@
 #include <QSettings>
 
 /* Project includes */
-
+#include <enedisTIC/utils.h>
 
 
 /* ########################################################################## */
@@ -28,6 +28,10 @@ public:
     int         influxdbPort(void) const;
     QString     influxdbDatabaseName(void) const;
     QString     influxdbMeasurementName(void) const;
+
+    QString     serialPortName(void) const;
+
+    TIC::TeTICMode  ticMode(void);
 
 
 

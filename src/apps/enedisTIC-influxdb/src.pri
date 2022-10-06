@@ -1,6 +1,7 @@
 HEADERS	+= $$PWD/src/CMainController.h
 HEADERS	+= $$PWD/src/CSettings.h
 HEADERS	+= $$PWD/src/CWrapperTicInflux.h
+HEADERS	+= $$PWD/src/trace.h
 
 SOURCES	+= src/main.cpp
 SOURCES	+= $$PWD/src/CMainController.cpp
